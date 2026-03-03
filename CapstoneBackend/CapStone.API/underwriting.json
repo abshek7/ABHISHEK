@@ -1,0 +1,128 @@
+{
+  "Underwriting": {
+    "ageFactors": [
+      {
+        "min": 0,
+        "max": 17,
+        "score": 1.5
+      },
+      {
+        "min": 18,
+        "max": 25,
+        "score": 1.0
+      },
+      {
+        "min": 26,
+        "max": 35,
+        "score": 1.1
+      },
+      {
+        "min": 36,
+        "max": 45,
+        "score": 1.2
+      },
+      {
+        "min": 46,
+        "max": 55,
+        "score": 1.6
+      },
+      {
+        "min": 56,
+        "max": 65,
+        "score": 2.2
+      },
+      {
+        "min": 66,
+        "max": 75,
+        "score": 3.0
+      },
+      {
+        "min": 76,
+        "max": 85,
+        "score": 4.5
+      },
+      {
+        "min": 86,
+        "max": 120,
+        "score": 8.0
+      }
+    ],
+    "occupationFactors": {
+      "SoftwareEngineer": 1.0,
+      "DataScientist": 1.0,
+      "UIUXDesigner": 1.0,
+      "Teacher": 1.1,
+      "OfficeWorker": 1.0,
+      "Doctor": 1.1,
+      "Nurse": 1.3,
+      "Lawyer": 1.1,
+      "Accountant": 1.0,
+      "Driver": 1.8,
+      "TruckDriver": 2.2,
+      "DeliveryAgent": 1.9,
+      "Pilot": 1.5,
+      "AirTrafficController": 1.6,
+      "ConstructionWorker": 2.5,
+      "FactoryWorker": 2.2,
+      "Police": 1.8,
+      "Firefighter": 2.4,
+      "SecurityGuard": 1.4,
+      "Miner": 3.5,
+      "Farmer": 1.7,
+      "FullStackTrainer": 1.0,
+      "Student": 1.3,
+      "Researcher": 1.1,
+      "Unemployed": 2.0,
+      "Retired": 1.8,
+      "Artist": 1.2,
+      "Athlete": 1.4,
+      "Military": 2.5,
+      "Diver": 3.0
+    },
+    "habitFactors": {
+      "None": 1.0,
+      "OccasionalAlcohol": 1.3,
+      "RegularAlcohol": 1.8,
+      "HeavyAlcohol": 3.0,
+      "Smoking": 2.0,
+      "HeavySmoking": 3.5,
+      "Vaping": 1.5,
+      "ExtremeSports": 2.5,
+      "BungeeJumping": 2.2,
+      "Skydiving": 2.8,
+      "NightDriving": 1.5,
+      "FrequentTraveler": 1.2,
+      "SubstanceAbuse": 6.0,
+      "SedentaryLifestyle": 1.4,
+      "ActiveLifestyle": 0.9
+    },
+    "medicalFactors": {
+      "Healthy": 1.0,
+      "MinorIssues": 1.3,
+      "Asthma": 1.4,
+      "Diabetes": 1.7,
+      "Type1Diabetes": 2.2,
+      "Type2Diabetes": 1.8,
+      "Hypertension": 1.6,
+      "HeartDisease": 2.8,
+      "Epilepsy": 3.0,
+      "VisionProblems": 1.4,
+      "HearingImpairment": 1.2,
+      "ChronicPain": 1.6,
+      "Obesity": 1.8,
+      "CancerRemission": 2.5,
+      "ActiveCancer": 5.0,
+      "TerminalIllness": 15.0,
+      "OrganTransplant": 4.0,
+      "NeurologicalDisorder": 3.5
+    },
+    "eligibilityRules": {
+      "maxRiskScore": 5.0,
+      "rejectAbove": 8.0
+    },
+    "premiumRules": {
+      "baseMultiplier": 1.0,
+      "maxPremiumMultiplier": 8.0
+    }
+  }
+}
