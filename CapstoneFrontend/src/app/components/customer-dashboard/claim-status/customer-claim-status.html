@@ -1,0 +1,30 @@
+<div class="component-container">
+  <nz-table #claimTable [nzData]="claims()" nzSize="middle">
+    <thead>
+      <tr>
+        <th>Policy Number</th>
+        <th>Coverage Category</th>
+        <th>Incident Date</th>
+        <th>Claim Amount</th>
+        <th>Settled Amount</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (c of claimTable.data; track c.id) {
+      <tr>
+        <td><code>{{ c.policyId.substring(0,8) }}...</code></td>
+        <td>{{ c.coverageCategory }}</td>
+        <td>{{ c.incidentDate | date: 'mediumDate' }}</td>
+        <td>{{ c.claimAmount | currency }}</td>
+        <td>{{ (c.approvedAmount | currency) ?? '-' }}</td>
+        <td>
+          <nz-tag [nzColor]="c.status === 'Approved' ? 'success' : (c.status === 'Rejected' ? 'error' : 'processing')">
+            {{ c.status }}
+          </nz-tag>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </nz-table>
+</div>

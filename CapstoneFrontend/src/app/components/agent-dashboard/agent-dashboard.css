@@ -1,0 +1,151 @@
+.dashboard-container {
+  min-height: calc(100vh - 64px);
+  background: #f0f2f5;
+  width: 100%;
+}
+
+.dashboard-sider {
+  background: white;
+  border-right: 1px solid #f0f0f0;
+}
+
+.sider-menu {
+  height: calc(100% - 72px);
+  border-right: 0;
+}
+
+.sider-action-container {
+  padding: 16px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.direct-issue-btn {
+  height: 40px;
+  font-weight: 600;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.dashboard-main-area {
+  padding: 24px;
+  background: #f0f2f5;
+}
+
+.dashboard-content-component {
+  min-height: 280px;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  background: #001529;
+  padding: 24px 32px;
+  border-radius: 8px;
+  color: white;
+}
+
+.stat-value {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.cards-row {
+  margin-top: 8px;
+}
+
+.premium-title {
+  color: white;
+  margin: 0;
+  font-size: 2.2rem;
+  font-weight: 700;
+}
+
+.subtitle {
+  color: rgba(255, 255, 255, 0.65);
+  margin-top: 4px;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.quick-stats {
+  display: flex;
+  gap: 16px;
+}
+
+.stat-number {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #1890ff;
+}
+
+.stat-number.green {
+  color: #52c41a;
+}
+
+.stat-number.orange {
+  color: #faad14;
+}
+
+.tab-content-inner {
+  padding: 24px 0;
+}
+
+.table-card {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.selected-row {
+  background: #e6f7ff;
+}
+
+.underwriting-panel {
+  border: 1px solid #91d5ff;
+  background: #f0f9ff;
+  position: sticky;
+  top: 24px;
+}
+
+.panel-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.stat-grid {
+  display: flex;
+  gap: 48px;
+}
+
+.grid-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.grid-item span {
+  color: #8c8c8c;
+  font-size: 0.9rem;
+}
+
+.grid-item b {
+  font-size: 1.6rem;
+}
+
+.green {
+  color: #52c41a;
+}
+
+code {
+  background: #f5f5f5;
+  padding: 2px 4px;
+  border-radius: 4px;
+}

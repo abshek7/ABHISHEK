@@ -1,0 +1,93 @@
+<div class="component-container">
+  <nz-layout class="dashboard-layout">
+    <nz-sider [nzWidth]="250" nzTheme="light">
+      <ul nz-menu nzMode="inline" class="sider-menu">
+        <li nz-menu-item (click)="selectedMenuItem.set('process')" [nzSelected]="selectedMenuItem() === 'process'">
+          Process Payment
+        </li>
+        <li nz-menu-item (click)="selectedMenuItem.set('ledger')" [nzSelected]="selectedMenuItem() === 'ledger'">
+          Transaction Ledger
+        </li>
+      </ul>
+    </nz-sider>
+
+    <nz-content class="dashboard-content-area">
+      @if (selectedMenuItem() === 'process') {
+      <div class="tab-content">
+        <nz-card [nzBordered]="false" class="payment-form-card">
+          <form nz-form [formGroup]="form" nzLayout="vertical">
+            <div nz-row [nzGutter]="24">
+              <div nz-col [nzSpan]="12">
+                <nz-form-item>
+                  <nz-form-label nzRequired>Policy Reference</nz-form-label>
+                  <nz-form-control nzErrorTip="Please enter a valid policy ID">
+                    <input nz-input formControlName="policyId" placeholder="e.g. POL-123456" />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+              <div nz-col [nzSpan]="12">
+                <nz-form-item>
+                  <nz-form-label nzRequired>Amount ($)</nz-form-label>
+                  <nz-form-control>
+                    <nz-input-number formControlName="amount" style="width: 100%" [nzMin]="1"
+                      [nzStep]="10"></nz-input-number>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+
+            <nz-form-item>
+              <nz-form-label nzRequired>Payment Method</nz-form-label>
+              <nz-form-control>
+                <nz-radio-group formControlName="paymentMethod" nzButtonStyle="solid">
+                  @for (m of methods; track m) {
+                  <label nz-radio-button [nzValue]="m">{{ m }}</label>
+                  }
+                </nz-radio-group>
+              </nz-form-control>
+            </nz-form-item>
+
+            <div class="form-actions">
+              <button nz-button nzType="primary" nzSize="large" [nzLoading]="loading()" (click)="submitPayment()"
+                [disabled]="form.invalid || loading()">
+                Confirm & Pay Now
+              </button>
+            </div>
+          </form>
+        </nz-card>
+      </div>
+      }
+
+      @if (selectedMenuItem() === 'ledger') {
+      <div class="tab-content">
+        <nz-table #paymentTable [nzData]="payments()" nzSize="middle" [nzShowPagination]="true" [nzPageSize]="8">
+          <thead>
+            <tr>
+              <th>Policy</th>
+              <th>Date</th>
+              <th>Amount</th>
+              <th>Method</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Table mapping -->
+            @for (p of payments(); track p.id) {
+            <tr>
+              <td><code>{{ p.policyId.substring(0,8) }}...</code></td>
+              <td>{{ p.paymentDate | date: 'short' }}</td>
+              <td>{{ p.amount | currency: 'USD' }}</td>
+              <td>{{ p.paymentMethod }}</td>
+              <td>
+                <nz-badge [nzStatus]="p.paymentStatus === 'Paid' ? 'success' : 'processing'"
+                  [nzText]="p.paymentStatus"></nz-badge>
+              </td>
+            </tr>
+            }
+          </tbody>
+        </nz-table>
+      </div>
+      }
+    </nz-content>
+  </nz-layout>
+</div>

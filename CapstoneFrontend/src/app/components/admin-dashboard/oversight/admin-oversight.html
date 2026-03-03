@@ -1,0 +1,60 @@
+<div class="fade-in">
+    <div nz-row [nzGutter]="24">
+        <!-- CLAIMS OVERSIGHT -->
+        <div nz-col [nzSpan]="12">
+            <nz-card nzTitle="Claims Under Review">
+                <nz-table #progClaimTable [nzData]="inProgressClaims()" nzSize="small">
+                    <thead>
+                        <tr>
+                            <th>Claim Ref</th>
+                            <th>Officer</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (c of progClaimTable.data; track c.id) {
+                        <tr>
+                            <td><code>{{ c?.id?.substring(0, 8) }}</code></td>
+                            <td>
+                                <nz-tag nzColor="orange">{{ c?.officerId?.substring(0, 8) }}...</nz-tag>
+                            </td>
+                            <td>{{ c.claimAmount | currency }}</td>
+                            <td><nz-badge nzStatus="processing" [nzText]="c.status"></nz-badge></td>
+                        </tr>
+                        }
+                    </tbody>
+                </nz-table>
+            </nz-card>
+        </div>
+
+        <!-- POLICY REQUESTS OVERSIGHT -->
+        <div nz-col [nzSpan]="12">
+            <nz-card nzTitle="Policies Under Review">
+                <nz-table #progReqTable [nzData]="inProgressRequests()" nzSize="small">
+                    <thead>
+                        <tr>
+                            <th>Request Ref</th>
+                            <th>Agent</th>
+                            <th>Plan Type</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (r of progReqTable.data; track r.id) {
+                        <tr>
+                            <td><code>{{ r?.id?.substring(0, 8) }}</code></td>
+                            <td>
+                                <nz-tag nzColor="blue">{{ r?.assignedAgentName || r?.assignedAgentId?.substring(0, 8)
+                                    }}</nz-tag>
+                            </td>
+                            <td>{{ r.policyTypeName }}</td>
+                            <td><nz-badge nzStatus="processing" [nzText]="r.status"></nz-badge></td>
+                        </tr>
+                        }
+                    </tbody>
+                </nz-table>
+            </nz-card>
+        </div>
+    </div>
+</div>

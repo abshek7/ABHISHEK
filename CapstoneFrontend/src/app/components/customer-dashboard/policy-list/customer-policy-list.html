@@ -1,0 +1,204 @@
+<div class="policy-list-container">
+
+  <!-- REQUESTS SECTIONS -->
+  @if (myRequests().length > 0) {
+  <div class="requests-section">
+
+    <!-- PENDING APPLICATIONS -->
+    @if (myRequests().some(r => ['New', 'Assigned', 'UnderReview'].includes(r.status))) {
+    <nz-divider nzText="Pending Applications"></nz-divider>
+    <div nz-row nzGutter="16" class="request-cards-row">
+      @for (req of myRequests(); track req.id) {
+      @if (['New', 'Assigned', 'UnderReview'].includes(req.status)) {
+      <div nz-col [nzSpan]="8">
+        <nz-card nzSize="small" [nzTitle]="req.policyTypeName" class="pending-plan-card">
+          <div class="request-status-info">
+            <p>Status: <strong>{{ req.status }}</strong></p>
+            @if (req.assignedAgentName) {
+            <p class="text-muted">Assigned to: <strong>{{ req.assignedAgentName }}</strong></p>
+            } @else {
+            <p class="text-muted">Waiting for agent review...</p>
+            }
+          </div>
+        </nz-card>
+      </div>
+      }
+      }
+    </div>
+    }
+
+    <!-- APPROVED REQUESTS -->
+    @if (myRequests().some(r => r.status === 'Approved')) {
+    <nz-divider nzText="Action Required: Approved Requests"></nz-divider>
+    <div nz-row nzGutter="16" class="request-cards-row">
+      @for (req of myRequests(); track req.id) {
+      @if (req.status === 'Approved') {
+      <div nz-col [nzSpan]="8">
+        <nz-card nzSize="small" [nzTitle]="req.policyTypeName" class="approved-plan-card">
+          <p>Your request has been approved! Ready to activate?</p>
+          <button nz-button nzType="primary" nzBlock (click)="confirmAndPay(req.id)">
+            Activate & Pay
+          </button>
+        </nz-card>
+      </div>
+      }
+      }
+    </div>
+    }
+  </div>
+  }
+
+  <nz-divider nzText="Your Active Policies"></nz-divider>
+
+  <div class="list-header">
+    <div class="search-box">
+      <nz-input-group [nzPrefix]="prefixTemplate">
+        <input type="text" nz-input placeholder="Filter by policy number or type"
+          (keyup)="onFilter($any($event.target).value)" />
+      </nz-input-group>
+      <ng-template #prefixTemplate><span nz-icon nzType="search"></span></ng-template>
+    </div>
+  </div>
+
+  <div class="table-wrapper">
+    <!-- ... same table contents ... -->
+    <nz-table #policyTable [nzData]="policies()" nzSize="middle" [nzShowPagination]="true" [nzPageSize]="10">
+      <thead>
+        <tr>
+          <th>Policy No.</th>
+          <th>Plan Type</th>
+          <th>Premium</th>
+          <th>Coverage</th>
+          <th>Status</th>
+          <th>Period</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (p of policies(); track p.id) {
+        <tr>
+          <td><code>{{ p.policyNumber }}</code></td>
+          <td><b>{{ p.policyTypeName }}</b></td>
+          <td>{{ p.finalPremium | currency }}</td>
+          <td>{{ p.coverageAmount | currency }}</td>
+          <td>
+            <nz-badge [nzStatus]="p.status === 'Active' ? 'success' : (p.status === 'Expired' ? 'warning' : 'default')"
+              [nzText]="p.status"></nz-badge>
+          </td>
+          <td>
+            <small class="text-muted">
+              {{ p.startDate | date: 'shortDate' }} - {{ p.endDate | date: 'shortDate' }}
+            </small>
+          </td>
+          <td>
+            <div class="action-buttons">
+              <button nz-button nzType="text" nzSize="small" (click)="viewInvoice(p.id)"
+                [nzLoading]="loading() && selectedPolicyId() === p.id" title="View Invoice">
+                <i nz-icon nzType="file-text"></i>
+              </button>
+              @if (p.status === 'Active' || p.status === 'Expired') {
+              <button nz-button nzType="primary" nzSize="small" (click)="openRenewModal(p.id)">
+                Renew
+              </button>
+              }
+            </div>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+
+<!-- Renewal Modal -->
+<nz-modal [(nzVisible)]="isRenewModalVisible" nzTitle="Renew Insurance Policy"
+  (nzOnCancel)="isRenewModalVisible.set(false)" (nzOnOk)="submitRenewal()" [nzOkLoading]="loading()">
+  <ng-container *nzModalContent>
+    <div class="renewal-form">
+      <p>Select the duration for which you want to extend your coverage.</p>
+      <nz-form-item>
+        <nz-form-label>Renewal Duration (Months)</nz-form-label>
+        <nz-form-control>
+          <nz-input-number [ngModel]="renewalDuration()" (ngModelChange)="renewalDuration.set($event)" [nzMin]="1"
+            [nzMax]="60" [nzStep]="1" style="width: 100%"></nz-input-number>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </ng-container>
+</nz-modal>
+
+<!-- Invoice Modal -->
+<nz-modal [(nzVisible)]="isInvoiceModalVisible" nzTitle="Premium Payment Invoice"
+  (nzOnCancel)="isInvoiceModalVisible.set(false)" [nzFooter]="null" [nzWidth]="600">
+  <ng-container *nzModalContent>
+    @if (currentInvoice()) {
+    <div class="invoice-container">
+      <div class="invoice-header" style="display: flex; justify-content: space-between; margin-bottom: 24px;">
+        <div>
+          <h2 style="margin: 0;">INVOICE</h2>
+          <p class="text-muted">#{{ currentInvoice()!.policyNumber }}</p>
+        </div>
+        <div style="text-align: right;">
+          <p><b>Date:</b> {{ currentInvoice()!.issuedDate | date }}</p>
+          <p><b>Status:</b> {{ currentInvoice()!.status }}</p>
+        </div>
+      </div>
+
+      <nz-descriptions nzBordered [nzColumn]="1" nzSize="small">
+        <nz-descriptions-item nzTitle="Customer">{{ currentInvoice()!.customerName }}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Policy Number">{{ currentInvoice()!.policyNumber }}</nz-descriptions-item>
+      </nz-descriptions>
+
+      <div class="invoice-amount" style="margin-top: 24px; text-align: right;">
+        <p style="font-size: 1.1rem;">Total Amount Due:</p>
+        <h1 style="color: #1890ff; font-weight: 700;">{{ currentInvoice()!.totalAmount | currency }}</h1>
+        <p class="text-muted">Amount Paid: {{ currentInvoice()!.amountPaid | currency }}</p>
+      </div>
+    </div>
+    }
+  </ng-container>
+</nz-modal>
+
+<!-- NOMINEE MODAL -->
+<nz-modal [(nzVisible)]="isNomineeModalVisible" nzTitle="Activate Your Policy" (nzOnCancel)="handleNomineeCancel()"
+  (nzOnOk)="submitPurchase()" [nzOkLoading]="submitting()" [nzOkText]="'Activate Now'">
+
+  <ng-container *nzModalContent>
+    <div class="nominee-modal-intro">
+      <p>Please provide nominee details to finalize your policy issuance.</p>
+    </div>
+    <form nz-form [formGroup]="nomineeForm" nzLayout="vertical">
+      <nz-form-item>
+        <nz-form-label nzRequired>Full Name</nz-form-label>
+        <nz-form-control nzErrorTip="Please enter nominee name">
+          <input nz-input formControlName="nomineeName" placeholder="Full Name of the Nominee" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzRequired>Relationship to You</nz-form-label>
+        <nz-form-control nzErrorTip="Please enter relationship">
+          <input nz-input formControlName="nomineeRelation" placeholder="e.g. Spouse, Child, Parent" />
+        </nz-form-control>
+      </nz-form-item>
+      <div nz-row [nzGutter]="16">
+        <div nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label nzRequired>Phone Number</nz-form-label>
+            <nz-form-control nzErrorTip="Invalid 10-digit phone">
+              <input nz-input formControlName="nomineePhone" placeholder="10 Digits" />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label nzRequired>Date of Birth</nz-form-label>
+            <nz-form-control nzErrorTip="Please select DOB">
+              <nz-date-picker formControlName="nomineeDob" style="width: 100%">
+              </nz-date-picker>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    </form>
+  </ng-container>
+</nz-modal>

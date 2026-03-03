@@ -1,0 +1,108 @@
+<div class="component-container">
+  <nz-card [nzBordered]="false" class="premium-form-card">
+    <form nz-form [formGroup]="form" nzLayout="vertical">
+      <div nz-row [nzGutter]="24">
+        <div nz-col [nzSpan]="14">
+          <nz-form-item>
+            <nz-form-label nzRequired>Select Policy to Claim Against</nz-form-label>
+            <nz-form-control nzErrorTip="Please select a valid policy">
+              <nz-select formControlName="policyId" nzShowSearch nzPlaceHolder="Enter policy number or type..."
+                (ngModelChange)="onPolicyChange($event)">
+                @for (p of policies(); track p.id) {
+                <nz-option [nzValue]="p.id" [nzLabel]="p.policyNumber + ' (' + p.policyTypeName + ')'"></nz-option>
+                }
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+
+          @if (form.get('policyId')?.value) {
+          <div class="claim-details-grid">
+            <nz-divider nzText="Incident Details"></nz-divider>
+
+            <div nz-row [nzGutter]="16">
+              <div nz-col [nzSpan]="12">
+                <nz-form-item>
+                  <nz-form-label nzRequired>Occurrence Date</nz-form-label>
+                  <nz-form-control>
+                    <nz-date-picker formControlName="incidentDate" style="width: 100%"></nz-date-picker>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+              <div nz-col [nzSpan]="12">
+                <nz-form-item>
+                  <nz-form-label nzRequired>Claim Category</nz-form-label>
+                  <nz-form-control>
+                    <nz-select formControlName="coverageCategory" nzPlaceHolder="Select nature of claim">
+                      @for (c of coverageCategories; track c) {
+                      <nz-option [nzValue]="c" [nzLabel]="c"></nz-option>
+                      }
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+
+            <nz-form-item>
+              <nz-form-label nzRequired>Estimated Claim Amount ($)</nz-form-label>
+              <nz-form-control>
+                <nz-input-number formControlName="claimAmount" style="width: 100%" [nzMin]="1"
+                  [nzStep]="100"></nz-input-number>
+              </nz-form-control>
+            </nz-form-item>
+
+            <nz-form-item>
+              <nz-form-label nzRequired>Detailed Description</nz-form-label>
+              <nz-form-control>
+                <textarea nz-input rows="4" formControlName="description"
+                  placeholder="Please describe the incident in detail..."></textarea>
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-label nzRequired>Accident Report / Evidence (PDF/Image)</nz-form-label>
+              <nz-form-control nzErrorTip="Please upload a valid report">
+                <nz-upload nzType="drag" [nzMultiple]="false" [nzBeforeUpload]="beforeUpload" [nzLimit]="1"
+                  [nzFileList]="fileList" style="width: 100%">
+                  <p class="ant-upload-drag-icon">
+                    <i nz-icon nzType="inbox"></i>
+                  </p>
+                  <p class="ant-upload-text">Click or drag report to this area to upload</p>
+                </nz-upload>
+              </nz-form-control>
+            </nz-form-item>
+
+            <div class="form-actions">
+              <button nz-button nzType="primary" nzSize="large" [nzLoading]="loading()" (click)="submit()"
+                [disabled]="!canSubmit()">
+                Submit Claim Request
+              </button>
+            </div>
+          </div>
+          }
+        </div>
+
+        @if (hasNominees()) {
+        <div nz-col [nzSpan]="10">
+          <nz-card nzTitle="Registered Nominees" nzType="inner" class="nominee-card">
+            <p class="nominee-hint">Benefits will be disbursed to these registered individuals in order of precedence.
+            </p>
+            <div class="nominee-list">
+              @for (n of nominees(); track n.id) {
+              <div class="nominee-item">
+                <div class="n-header">
+                  <span class="n-name">{{ n.name }}</span>
+                  <nz-tag>{{ n.relationship }}</nz-tag>
+                </div>
+                <div class="n-details">
+                  <span><i nz-icon nzType="calendar"></i> {{ n.dateOfBirth | date:'shortDate' }}</span>
+                  <span><i nz-icon nzType="phone"></i> {{ n.phone }}</span>
+                </div>
+              </div>
+              }
+            </div>
+          </nz-card>
+        </div>
+        }
+      </div>
+    </form>
+  </nz-card>
+</div>

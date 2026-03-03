@@ -1,0 +1,63 @@
+<div class="chatbot-container">
+    <!-- Floating Button -->
+    <button class="chat-toggle-btn" (click)="toggleChat()" [class.hidden]="isOpen()">
+        <span nz-icon nzType="message" nzTheme="outline"></span>
+    </button>
+
+    <!-- Chat Window -->
+    <div class="chat-window" [class.open]="isOpen()">
+        <div class="chat-header">
+            <div class="header-info">
+                <span nz-icon nzType="robot" nzTheme="outline" class="bot-icon"></span>
+                <span class="bot-name">Hartford Assistant</span>
+            </div>
+            <div class="header-actions">
+                <button class="audio-toggle-btn" (click)="toggleAudio()" [class.active]="audioEnabled()" nz-tooltip
+                    [nzTooltipTitle]="audioEnabled() ? 'Audio ON' : 'Audio OFF'">
+                    <span nz-icon [nzType]="audioEnabled() ? 'sound' : 'muted'" nzTheme="outline"></span>
+                </button>
+                <button class="close-btn" (click)="toggleChat()">
+                    <span nz-icon nzType="close" nzTheme="outline"></span>
+                </button>
+            </div>
+        </div>
+
+        <div class="chat-messages" #scrollContainer>
+            @for (msg of messages(); track $index) {
+            <div class="message-wrapper" [class.user]="msg.type === 'user'">
+                <div class="message-bubble">
+                    {{ msg.text }}
+
+                    @if (msg.imageBase64) {
+                    <div class="message-image">
+                        <img [src]="'data:image/png;base64,' + msg.imageBase64" alt="Generated image" />
+                    </div>
+                    }
+
+                    @if (msg.audioBase64) {
+                    <button class="replay-audio-btn" (click)="playAudio(msg.audioBase64!)" nz-tooltip
+                        nzTooltipTitle="Replay audio">
+                        <span nz-icon nzType="play-circle" nzTheme="outline"></span>
+                    </button>
+                    }
+                </div>
+            </div>
+            }
+            @if (isLoading()) {
+            <div class="message-wrapper">
+                <div class="message-bubble loading">
+                    <span nz-icon nzType="loading" nzTheme="outline"></span>
+                </div>
+            </div>
+            }
+        </div>
+
+        <div class="chat-input-area">
+            <input type="text" [(ngModel)]="userInput" (keyup.enter)="sendMessage()"
+                placeholder="Ask about insurance..." [disabled]="isLoading()" />
+            <button (click)="sendMessage()" [disabled]="isLoading() || !userInput.trim()">
+                <span nz-icon nzType="send" nzTheme="outline"></span>
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,81 @@
+<div class="component-container">
+  <div class="intro-section">
+    <h2 class="section-title">Explore Protection Plans</h2>
+    <p>
+      Select a plan that fits your lifestyle. Our intelligent underwriting will
+      provide a personalized quote based on your profile.
+    </p>
+  </div>
+
+  <div nz-row [nzGutter]="[24, 24]">
+    @for (plan of policyTypes(); track plan.id) {
+    <div nz-col [nzXs]="24" [nzSm]="12" [nzLg]="8">
+      <nz-card nzHoverable [nzTitle]="plan.name" [nzExtra]="planBadge" class="plan-card"
+        [class.selected]="form.get('policyTypeId')?.value === plan.id" (click)="selectPlan(plan.id)">
+        <ng-template #planBadge>
+          <nz-tag nzColor="blue">New</nz-tag>
+        </ng-template>
+
+        <div class="plan-features">
+          <p class="plan-description">
+            Comprehensive accident protection tailored for you.
+          </p>
+
+          <ul class="feature-list">
+            <li>
+              <span nz-icon nzType="check-circle" nzTheme="twotone" nzTwotoneColor="#52c41a"></span>
+              $1M+ Coverage
+            </li>
+            <li>
+              <span nz-icon nzType="check-circle" nzTheme="twotone" nzTwotoneColor="#52c41a"></span>
+              Global Accessibility
+            </li>
+            <li>
+              <span nz-icon nzType="check-circle" nzTheme="twotone" nzTwotoneColor="#52c41a"></span>
+              24/7 Support
+            </li>
+          </ul>
+        </div>
+      </nz-card>
+    </div>
+    }
+  </div>
+
+  @if (form.get('policyTypeId')?.value) {
+  <div class="request-form-section">
+    <nz-divider nzText="Complete Your Request"></nz-divider>
+
+    <nz-card [nzBordered]="false" class="form-overlay">
+      <form nz-form [formGroup]="form" nzLayout="vertical">
+        <div nz-row [nzGutter]="24">
+          <div nz-col [nzSpan]="12">
+            <nz-form-item>
+              <nz-form-label>Lifestyle & Habits</nz-form-label>
+              <nz-form-control>
+                <textarea nz-input rows="3" formControlName="personalHabits"
+                  placeholder="e.g. Smoking, Adventure Sports, etc."></textarea>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <div nz-col [nzSpan]="12">
+            <nz-form-item>
+              <nz-form-label>Medical History</nz-form-label>
+              <nz-form-control>
+                <textarea nz-input rows="3" formControlName="medicalHistory"
+                  placeholder="Please mention any pre-existing conditions..."></textarea>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button nz-button nzType="primary" nzSize="large" [nzLoading]="loading()" (click)="submit()" type="button">
+            Submit Protection Request
+          </button>
+        </div>
+      </form>
+    </nz-card>
+  </div>
+  }
+</div>

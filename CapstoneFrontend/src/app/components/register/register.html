@@ -1,0 +1,76 @@
+<div class="auth-container">
+  <nz-row nzJustify="center" nzAlign="middle">
+    <nz-col nzXs="24" nzSm="20" nzMd="14" nzLg="10" nzXl="10">
+      <nz-card nzTitle="Register">
+        <form nz-form [formGroup]="form" (ngSubmit)="submit()" nzLayout="vertical">
+          @if (error()) {
+          <nz-alert nzType="error" [nzMessage]="error()" nzShowIcon class="mb-16"></nz-alert>
+          }
+          @if (success()) {
+          <nz-alert nzType="success" [nzMessage]="success()" nzShowIcon class="mb-16"></nz-alert>
+          }
+
+          <nz-form-item>
+            <nz-form-label>Full Name</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="name" placeholder="Enter full name" />
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-label>Email Address</nz-form-label>
+            <nz-form-control>
+              <input nz-input type="email" formControlName="email" placeholder="Enter email" />
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-label>Password</nz-form-label>
+            <nz-form-control>
+              <input nz-input type="password" formControlName="password" placeholder="Create a password" />
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-label>Date of Birth</nz-form-label>
+            <nz-form-control>
+              <nz-date-picker formControlName="dateOfBirth" nzFormat="yyyy-MM-dd" style="width: 100%"></nz-date-picker>
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-label>Phone Number</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="phone" placeholder="Enter phone" />
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-label>Address</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="address" placeholder="Enter address" />
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-label>Occupation</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="occupation" placeholder="Enter occupation" />
+            </nz-form-control>
+          </nz-form-item>
+
+          <div class="auth-actions">
+            <button nz-button nzType="primary" type="submit" [nzLoading]="loading()"
+              [disabled]="form.invalid || loading()" nzBlock>
+              Register Account
+            </button>
+
+            <div class="register-link mt-16">
+              <a routerLink="/login">Already registered? Login</a>
+            </div>
+          </div>
+        </form>
+      </nz-card>
+    </nz-col>
+  </nz-row>
+</div>

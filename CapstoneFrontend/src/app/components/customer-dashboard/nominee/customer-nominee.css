@@ -1,0 +1,56 @@
+.page-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.component-container {
+  padding: 8px;
+}
+
+.premium-form-card {
+  max-width: 800px;
+  background: white;
+}
+
+.form-intro {
+  margin-bottom: 24px;
+}
+
+.form-intro p {
+  color: #8c8c8c;
+  line-height: 1.6;
+}
+
+.form-actions {
+  margin-top: 32px;
+}
+
+::ng-deep .ant-form-item-label>label {
+  font-weight: 500;
+  color: #595959;
+}
+
+.actions-row {
+  margin-top: 16px;
+  display: flex;
+  gap: 12px;
+}
+
+.message {
+  margin-bottom: 12px;
+}
+
+.message.success {
+  color: #52c41a;
+}
+
+.message.error {
+  color: #ff4d4f;
+}

@@ -1,0 +1,147 @@
+<div class="tab-content-inner fade-in">
+    <div nz-row [nzGutter]="24">
+        <!-- QUEUE -->
+        <div nz-col [nzXs]="24" [nzLg]="14">
+            <nz-card nzTitle="Claims Assessment Queue" [nzExtra]="countTemplate">
+                <ng-template #countTemplate>
+                    <nz-badge [nzCount]="claims().length" nzShowZero
+                        [nzStyle]="{ backgroundColor: '#fa541c' }"></nz-badge>
+                </ng-template>
+
+                <nz-table #claimTable [nzData]="claims()" nzSize="small">
+                    <thead>
+                        <tr>
+                            <th>Claim Ref</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (c of claimTable.data; track c.id) {
+                        <tr>
+                            <td><code>{{ c.id.substring(0, 8) }}</code></td>
+                            <td>{{ c.claimAmount | currency }}</td>
+                            <td><nz-badge [nzStatus]="c.status === 'Submitted' ? 'processing' : 'default'"
+                                    [nzText]="c.status"></nz-badge></td>
+                            <td>
+                                <button nz-button nzType="primary" nzSize="small"
+                                    (click)="selectClaim(c.id)">Assess</button>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </nz-table>
+            </nz-card>
+        </div>
+
+        <!-- REVIEW PANEL -->
+        <div nz-col [nzXs]="24" [nzLg]="10">
+            @if (selected()) {
+            <nz-card [nzTitle]="'Assessment: ' + selected()?.id?.substring(0,8)" class="form-card fade-in">
+                <!-- CONTEXTUAL DATA -->
+                <div class="context-section">
+                    <nz-divider nzText="Policy & Underwriting Context"></nz-divider>
+                    <div class="context-grid">
+                        <div class="context-item">
+                            <span class="label">Policy Number:</span>
+                            <span class="value">{{ selected()?.policyNumber }}</span>
+                        </div>
+                        <div class="context-item">
+                            <span class="label">Occupation:</span>
+                            <span class="value">{{ selected()?.occupation }}</span>
+                        </div>
+                        <div class="context-item">
+                            <span class="label">Risk Score:</span>
+                            <nz-tag [nzColor]="(selected()?.totalRiskScore ?? 0) > 1.5 ? 'red' : 'blue'">
+                                {{ selected()?.totalRiskScore | number:'1.1-2' }}
+                            </nz-tag>
+                        </div>
+                    </div>
+
+                    <div class="context-item mt-8">
+                        <span class="label">Medical History:</span>
+                        <p class="text-secondary small-text">{{ selected()?.medicalHistory || 'None disclosed' }}</p>
+                    </div>
+                    <div class="context-item">
+                        <span class="label">Personal Habits:</span>
+                        <p class="text-secondary small-text">{{ selected()?.personalHabits || 'None disclosed' }}</p>
+                    </div>
+
+                    <nz-divider nzText="Registered Nominees"></nz-divider>
+                    <div class="nominee-mini-list">
+                        @for (n of selected()?.nominees; track n.id) {
+                        <div class="nominee-mini-item">
+                            <strong>{{ n.name }}</strong> <span class="text-secondary">({{ n.relationship }})</span>
+                        </div>
+                        }
+                    </div>
+
+                    @if (selected()?.documentFilePath) {
+                    <div class="mt-16 mb-16">
+                        <a [href]="'https://localhost:7147/' + selected()?.documentFilePath" target="_blank" nz-button
+                            nzType="default" nzBlock>
+                            <i nz-icon nzType="file-pdf"></i> View Accident Report / Evidence
+                        </a>
+                    </div>
+                    }
+                </div>
+
+                <form nz-form [formGroup]="reviewForm" nzLayout="vertical">
+                    <nz-form-item>
+                        <nz-form-label>Decision</nz-form-label>
+                        <nz-form-control>
+                            <nz-radio-group formControlName="approve">
+                                <label nz-radio [nzValue]="true">Approve Settlement</label>
+                                <label nz-radio [nzValue]="false">Reject Claim</label>
+                            </nz-radio-group>
+                        </nz-form-control>
+                    </nz-form-item>
+
+                    <div *ngIf="reviewForm.value.approve">
+                        <div nz-row [nzGutter]="16">
+                            <div nz-col [nzSpan]="12">
+                                <nz-form-item>
+                                    <nz-form-label>Disability %</nz-form-label>
+                                    <nz-form-control>
+                                        <nz-input-number formControlName="disabilityPercentage" [nzMin]="0"
+                                            [nzMax]="100" class="w-100"></nz-input-number>
+                                    </nz-form-control>
+                                </nz-form-item>
+                            </div>
+                            <div nz-col [nzSpan]="12">
+                                <nz-form-item>
+                                    <nz-form-label>Approved $</nz-form-label>
+                                    <nz-form-control>
+                                        <nz-input-number formControlName="approvedAmount" [nzMin]="0"
+                                            class="w-100"></nz-input-number>
+                                    </nz-form-control>
+                                </nz-form-item>
+                            </div>
+                        </div>
+                    </div>
+
+                    <nz-form-item>
+                        <nz-form-label>Assessment Notes</nz-form-label>
+                        <nz-form-control>
+                            <textarea nz-input formControlName="notes" rows="3"></textarea>
+                        </nz-form-control>
+                    </nz-form-item>
+
+                    <button nz-button nzType="primary" nzBlock class="mt-16" [nzLoading]="submitting()"
+                        (click)="submitReview()">
+                        Finalize Settlement
+                    </button>
+                </form>
+            </nz-card>
+            } @else {
+            <nz-card class="empty-state-card">
+                <div class="empty-state-content">
+                    <i nz-icon nzType="file-search" style="font-size: 48px; color: #d9d9d9;"></i>
+                    <p>Select a claim from the queue to start validation</p>
+                </div>
+            </nz-card>
+            }
+        </div>
+    </div>
+</div>

@@ -1,0 +1,19 @@
+.tour-btn {
+    height: 48px;
+    font-size: 16px;
+    border-radius: 8px;
+    padding: 0 32px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #004a99;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.2s ease-in-out;
+}
+
+.tour-btn:hover {
+    background: #003573;
+}

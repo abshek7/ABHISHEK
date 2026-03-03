@@ -1,0 +1,53 @@
+<nz-layout class="app-layout">
+  <nz-header>
+    <div class="logo">
+      <a routerLink="/welcome">
+        <img src="https://cdn-icons-png.flaticon.com/128/12954/12954894.png" alt="logo">
+        <h1>PA Insurance</h1>
+      </a>
+    </div>
+    <ul nz-menu class="top-nav" nzTheme="dark" nzMode="horizontal">
+      <li nz-menu-item routerLinkActive="ant-menu-item-selected" routerLink="/welcome">Home</li>
+      <li nz-menu-item class="menu-spacer"></li>
+      @if (!isAuthenticated()) {
+      <li nz-menu-item routerLinkActive="ant-menu-item-selected" routerLink="/login">Login</li>
+      <li nz-menu-item routerLinkActive="ant-menu-item-selected" routerLink="/register">Register</li>
+      } @else {
+      @if (role() === 'Admin') {
+      <li nz-menu-item routerLinkActive="ant-menu-item-selected" routerLink="/dashboard/admin">Admin</li>
+      }
+      @if (role() === 'Agent') {
+      <li nz-menu-item routerLinkActive="ant-menu-item-selected" routerLink="/dashboard/agent">Agent</li>
+      }
+      @if (role() === 'Customer') {
+      <li nz-menu-item routerLinkActive="ant-menu-item-selected" routerLink="/dashboard/customer">Customer</li>
+      }
+      @if (role() === 'ClaimsOfficer') {
+      <li nz-menu-item routerLinkActive="ant-menu-item-selected" routerLink="/dashboard/claims-officer">Claims</li>
+      }
+      <li nz-menu-item>
+        <span nz-popover [nzPopoverContent]="profileTemplate" nzPopoverPlacement="bottomRight" nzPopoverTrigger="click">
+          <nz-avatar nzIcon="user" [nzText]="userInitial()"></nz-avatar>
+        </span>
+      </li>
+
+      <ng-template #profileTemplate>
+        <div>
+          <p><b>{{ email() }}</b></p>
+          <p>{{ role() }}</p>
+          <nz-divider></nz-divider>
+          <button nz-button nzType="primary" nzDanger nzBlock nz-popconfirm
+            nzPopconfirmTitle="Are you sure you want to sign out?" (nzOnConfirm)="logout()">
+            <span nz-icon nzType="logout"></span> Sign Out
+          </button>
+        </div>
+      </ng-template>
+      }
+    </ul>
+  </nz-header>
+  <nz-content>
+    <div class="inner-content">
+      <router-outlet></router-outlet>
+    </div>
+  </nz-content>
+</nz-layout>

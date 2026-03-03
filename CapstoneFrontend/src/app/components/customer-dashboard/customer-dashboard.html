@@ -1,0 +1,57 @@
+<nz-layout class="dashboard-container">
+  <nz-sider [nzWidth]="250" nzTheme="light" class="dashboard-sider">
+    <ul nz-menu nzMode="inline" class="sider-menu">
+      <li nz-menu-item nzMatchRouter>
+        <a [routerLink]="['policies']">My Policies</a>
+      </li>
+      <li nz-menu-item nzMatchRouter>
+        <a [routerLink]="['create-policy']">Browse Plans</a>
+      </li>
+      <li nz-menu-item nzMatchRouter>
+        <a [routerLink]="['raise-claim']">File a Claim</a>
+      </li>
+      <li nz-menu-item nzMatchRouter>
+        <a [routerLink]="['claims']">Claim Status</a>
+      </li>
+      <li nz-menu-item nzMatchRouter>
+        <a [routerLink]="['payments']">Payments</a>
+      </li>
+      <li nz-menu-item nzMatchRouter>
+        <a [routerLink]="['nominee']">Nominees</a>
+      </li>
+      <li nz-menu-item nzMatchRouter>
+        <a [routerLink]="['analytics']">Analytics</a>
+      </li>
+    </ul>
+  </nz-sider>
+
+  <nz-layout class="dashboard-main-area">
+    <nz-content class="dashboard-content-component">
+
+      <!-- PAGE HEADER WITH AVATAR -->
+      <div class="page-header">
+        <div class="header-content">
+
+          <!-- Title -->
+          <div class="title-section">
+            <h1 class="premium-title">Customer</h1>
+          </div>
+
+          <!-- Avatar (Right Side) -->
+          <!-- <div class="header-right">
+            <nz-avatar nzSize="large" [nzText]="userInitial()"
+              style="background-color: #ffffff; color: #001529; border: 2px solid #ffffff;">
+            </nz-avatar>
+          </div> -->
+
+        </div>
+      </div>
+
+      <!-- ROUTER OUTLET -->
+      <div class="dashboard-inner-content">
+        <router-outlet></router-outlet>
+      </div>
+
+    </nz-content>
+  </nz-layout>
+</nz-layout>

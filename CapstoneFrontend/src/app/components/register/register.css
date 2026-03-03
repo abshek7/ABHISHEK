@@ -1,0 +1,28 @@
+.auth-container {
+    min-height: calc(100vh - 64px);
+    padding: 24px;
+    background: #f5f7fa;
+}
+
+.mb-16 {
+    margin-bottom: 16px;
+}
+
+.mt-16 {
+    margin-top: 16px;
+}
+
+.auth-actions {
+    margin-top: 12px;
+}
+
+.register-link {
+    text-align: center;
+    margin-top: 12px;
+}
+
+@media (max-width: 576px) {
+    .auth-container {
+        padding: 16px;
+    }
+}

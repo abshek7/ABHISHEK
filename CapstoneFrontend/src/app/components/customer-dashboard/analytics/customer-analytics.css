@@ -1,0 +1,33 @@
+.analytics-container {
+    padding: 12px;
+}
+
+.stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 16px;
+}
+
+.grid-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.grid-item span {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 4px;
+}
+
+.grid-item b {
+    font-size: 1.5rem;
+    color: #2c3e50;
+}
+
+.orange {
+    color: #f39c12;
+}
+
+.green {
+    color: #27ae60;
+}

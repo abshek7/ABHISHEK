@@ -1,0 +1,15 @@
+.page-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.form-card {
+  margin-top: 16px;
+}
+
+.form-actions {
+  margin-top: 16px;
+  display: flex;
+  justify-content: flex-end;
+}
+

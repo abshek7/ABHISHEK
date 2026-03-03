@@ -1,0 +1,55 @@
+<nz-layout class="dashboard-container">
+
+
+  <nz-layout class="dashboard-body">
+    <!-- SIDE MENU -->
+    <nz-sider [nzWidth]="250" nzTheme="light" class="dashboard-sider">
+      <ul nz-menu nzMode="inline" class="sider-menu">
+        <li nz-menu-item nzMatchRouter>
+          <a routerLink="users">User Management</a>
+        </li>
+        <li nz-menu-item nzMatchRouter>
+          <a routerLink="oversight">Request & Claim Oversight</a>
+        </li>
+        <li nz-menu-item nzMatchRouter>
+          <a routerLink="analytics">Analytics</a>
+        </li>
+      </ul>
+    </nz-sider>
+
+    <!-- MAIN CONTENT -->
+    <nz-content class="dashboard-main-area">
+      <div class="dashboard-content-component">
+        <!-- HEADER -->
+        <div class="page-header">
+          <div class="header-content">
+            <div class="title-section">
+              <h1 class="premium-title">Admin Dashboard</h1>
+            </div>
+          </div>
+        </div>
+
+        <router-outlet></router-outlet>
+      </div>
+    </nz-content>
+  </nz-layout>
+</nz-layout>
+
+<ng-template #profileTemplate>
+  <div class="profile-popover-content">
+    <div class="popover-header">
+      <nz-avatar [nzText]="userInitial()" class="large-avatar"></nz-avatar>
+      <div class="popover-user-details">
+        <div class="popover-name">Administrator</div>
+        <div class="popover-email">{{ userEmail() }}</div>
+      </div>
+    </div>
+    <nz-divider></nz-divider>
+    <div class="popover-actions">
+      <button nz-button nzDanger nzBlock nz-popconfirm nzPopconfirmTitle="Are you sure you want to logout?"
+        (nzOnConfirm)="logout()">
+        Logout
+      </button>
+    </div>
+  </div>
+</ng-template>

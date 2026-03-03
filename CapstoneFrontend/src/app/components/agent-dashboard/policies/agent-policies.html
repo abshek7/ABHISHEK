@@ -1,0 +1,116 @@
+<div class="tab-content-inner fade-in">
+    <div nz-row [nzGutter]="16" class="mb-24">
+        <div nz-col [nzSpan]="12">
+            <nz-card nzSize="small">
+                <div class="commission-info">
+                    <p>Total Revenue: <b>{{ commission()?.totalRevenueGenerated | currency }}</b></p>
+                    <p>Commission Earned: <b style="color: #faad14;">{{ commission()?.earnedCommission | currency }}</b>
+                    </p>
+                </div>
+            </nz-card>
+        </div>
+        <div nz-col [nzSpan]="12" class="text-right">
+            <button nz-button nzType="primary" (click)="isDirectModalVisible.set(true)">
+                <i nz-icon nzType="plus"></i> Direct Issuance
+            </button>
+        </div>
+    </div>
+
+    <nz-card nzTitle="Portfolio: Active Policies">
+        <nz-table #polTable [nzData]="assignedPolicies()" nzSize="small">
+            <thead>
+                <tr>
+                    <th>Policy No.</th>
+                    <th>Plan Type</th>
+                    <th>Premium</th>
+                    <th>Coverage</th>
+                    <th>Status</th>
+                    <th>Period</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (p of polTable.data; track p.id) {
+                <tr>
+                    <td><code>{{ p.policyNumber }}</code></td>
+                    <td>{{ p.policyTypeName || 'Accident Plan' }}</td>
+                    <td>{{ p.finalPremium | currency }}</td>
+                    <td>{{ p.coverageAmount | currency }}</td>
+                    <td><nz-tag nzColor="green">Active</nz-tag></td>
+                    <td>{{ p.startDate | date:'shortDate' }} - {{ p.endDate | date:'shortDate' }}</td>
+                </tr>
+                }
+            </tbody>
+        </nz-table>
+    </nz-card>
+</div>
+
+<!-- DIRECT ISSUANCE MODAL -->
+<nz-modal [(nzVisible)]="isDirectModalVisible" nzTitle="Direct Policy Issuance"
+    (nzOnCancel)="isDirectModalVisible.set(false)" (nzOnOk)="submitDirectIssuance()" [nzOkText]="'Issue Policy'">
+    <ng-container *nzModalContent>
+        <form nz-form [formGroup]="directIssuanceForm" nzLayout="vertical">
+            <nz-form-item>
+                <nz-form-label nzRequired>Customer (User ID)</nz-form-label>
+                <nz-form-control>
+                    <input nz-input formControlName="customerId" placeholder="Enter customer's unique ID" />
+                </nz-form-control>
+            </nz-form-item>
+            <div nz-row [nzGutter]="16">
+                <div nz-col [nzSpan]="12">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>Plan Type</nz-form-label>
+                        <nz-form-control>
+                            <nz-select formControlName="policyTypeId">
+                                @for (pt of policyTypes(); track pt.id) {
+                                <nz-option [nzValue]="pt.id" [nzLabel]="pt.name"></nz-option>
+                                }
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="12">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>Frequency</nz-form-label>
+                        <nz-form-control>
+                            <nz-select formControlName="paymentFrequency">
+                                <nz-option nzValue="Monthly" nzLabel="Monthly"></nz-option>
+                                <nz-option nzValue="Quarterly" nzLabel="Quarterly"></nz-option>
+                                <nz-option nzValue="Annual" nzLabel="Annual"></nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <div nz-row [nzGutter]="16">
+                <div nz-col [nzSpan]="12">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>Final Premium</nz-form-label>
+                        <nz-form-control>
+                            <nz-input-number formControlName="finalPremium" class="w-100"></nz-input-number>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="12">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>Coverage</nz-form-label>
+                        <nz-form-control>
+                            <nz-input-number formControlName="coverageAmount" class="w-100"></nz-input-number>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <nz-form-item>
+                <nz-form-label nzRequired>Nominee Name</nz-form-label>
+                <nz-form-control>
+                    <input nz-input formControlName="nomineeName" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label nzRequired>Relation</nz-form-label>
+                <nz-form-control>
+                    <input nz-input formControlName="nomineeRelation" />
+                </nz-form-control>
+            </nz-form-item>
+        </form>
+    </ng-container>
+</nz-modal>

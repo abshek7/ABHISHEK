@@ -1,0 +1,21 @@
+<div class="tab-content-inner fade-in">
+    <div nz-row [nzGutter]="16">
+        <div nz-col [nzSpan]="8">
+            <nz-card nzSize="small">
+                <nz-statistic [nzValue]="activeClaimsCount()" nzTitle="Assigned Claims"></nz-statistic>
+            </nz-card>
+        </div>
+        <div nz-col [nzSpan]="8">
+            <nz-card nzSize="small">
+                <nz-statistic [nzValue]="settledCount()" nzTitle="Settled Successfully"
+                    [nzValueStyle]="{ color: '#52c41a' }"></nz-statistic>
+            </nz-card>
+        </div>
+        <div nz-col [nzSpan]="8">
+            <nz-card nzSize="small">
+                <nz-statistic [nzValue]="(settlementRatio() | number:'1.0-1') ?? '0'" nzTitle="Settlement Ratio (%)"
+                    [nzSuffix]="'%'"></nz-statistic>
+            </nz-card>
+        </div>
+    </div>
+</div>

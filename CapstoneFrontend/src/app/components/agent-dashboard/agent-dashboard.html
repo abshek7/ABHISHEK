@@ -1,0 +1,48 @@
+<nz-layout class="dashboard-container">
+  <!-- SIDE MENU -->
+  <nz-sider [nzWidth]="250" nzTheme="light" class="dashboard-sider">
+    <ul nz-menu nzMode="inline" class="sider-menu">
+      <li nz-menu-group nzTitle="OPERATIONS">
+        <ul>
+          <li nz-menu-item routerLink="workload" routerLinkActive="nz-menu-item-selected">
+            <span nz-icon nzType="audit"></span>
+            Assessments
+            <nz-badge [nzCount]="pendingRequestsCount()" class="badge-dot"></nz-badge>
+          </li>
+        </ul>
+      </li>
+      <li nz-menu-group nzTitle="PORTFOLIO & BUSINESS">
+        <ul>
+          <li nz-menu-item routerLink="policies" routerLinkActive="nz-menu-item-selected">
+            <span nz-icon nzType="safety-certificate"></span>
+            Active Policies
+          </li>
+          <li nz-menu-item routerLink="customers" routerLinkActive="nz-menu-item-selected">
+            <span nz-icon nzType="team"></span>
+            My Customers
+            <nz-badge [nzCount]="assignedCustomersCount()" class="badge-dot"
+              [nzStyle]="{ backgroundColor: '#52c41a' }"></nz-badge>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </nz-sider>
+
+  <!-- MAIN CONTENT -->
+  <nz-layout class="dashboard-main-area">
+    <nz-content class="dashboard-content-component">
+      <!-- HEADER -->
+      <div class="page-header">
+        <div class="header-content">
+          <div class="title-section">
+            <h1 class="premium-title">Agent Console</h1>
+          </div>
+          <!-- Avatar removed from here as it is redundant (already in top-right) -->
+        </div>
+      </div>
+
+      <!-- CHILD VIEWS -->
+      <router-outlet></router-outlet>
+    </nz-content>
+  </nz-layout>
+</nz-layout>

@@ -1,0 +1,57 @@
+.page-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.component-container {
+  padding: 8px;
+}
+
+.tab-content {
+  padding: 24px 0;
+}
+
+.payment-form-card {
+  max-width: 600px;
+  background: white;
+}
+
+.form-actions {
+  margin-top: 32px;
+}
+
+code {
+  background: #f5f5f5;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+::ng-deep .ant-table-thead>tr>th {
+  background: #fafafa;
+  font-weight: 600;
+}
+
+.actions-row {
+  margin-top: 16px;
+  display: flex;
+  gap: 12px;
+}
+
+.message {
+  margin-bottom: 12px;
+}
+
+.message.success {
+  color: #52c41a;
+}
+
+.message.error {
+  color: #ff4d4f;
+}

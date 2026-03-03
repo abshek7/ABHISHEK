@@ -1,0 +1,46 @@
+<nz-layout class="dashboard-container">
+  <!-- SIDE MENU -->
+  <nz-sider [nzWidth]="250" nzTheme="light" class="dashboard-sider">
+    <ul nz-menu nzMode="inline" class="sider-menu">
+      <li nz-menu-item routerLink="queue" routerLinkActive="nz-menu-item-selected">
+        <span nz-icon nzType="file-protect"></span>
+        Claims Queue
+        <nz-badge [nzCount]="pendingClaimsCount()" class="badge-dot"></nz-badge>
+      </li>
+      <li nz-menu-item routerLink="analytics" routerLinkActive="nz-menu-item-selected">
+        <span nz-icon nzType="dashboard"></span>
+        Operational Stats
+      </li>
+    </ul>
+  </nz-sider>
+
+  <!-- MAIN CONTENT -->
+  <nz-layout class="dashboard-main-area">
+    <nz-content class="dashboard-content-component">
+      <!-- HEADER -->
+      <div class="page-header">
+        <div class="header-content">
+          <div class="title-section">
+            <h1 class="premium-title">Claims Center</h1>
+          </div>
+
+        </div>
+
+        <ng-template #profileTemplate>
+          <div class="profile-popover">
+            <p><b>{{ userEmail() }}</b></p>
+            <p class="role-text">Claims Adjustment Officer</p>
+            <nz-divider></nz-divider>
+            <button nz-button nzType="primary" nzDanger nzBlock nz-popconfirm
+              nzPopconfirmTitle="Are you sure you want to sign out?" (nzOnConfirm)="logout()">
+              <span nz-icon nzType="logout"></span> Sign Out
+            </button>
+          </div>
+        </ng-template>
+      </div>
+
+      <!-- CHILD VIEWS -->
+      <router-outlet></router-outlet>
+    </nz-content>
+  </nz-layout>
+</nz-layout>

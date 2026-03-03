@@ -1,0 +1,83 @@
+<div class="fade-in">
+    <!-- OVERALL STATS -->
+    <div nz-row [nzGutter]="16" class="mb-24">
+        <div nz-col [nzSpan]="6">
+            <nz-card nzSize="small">
+                <nz-statistic [nzValue]="revenueReport()?.totalRevenue ?? 0" nzTitle="Cumulative Revenue"
+                    [nzValueStyle]="{ color: '#1890ff' }" [nzPrefix]="'$'"></nz-statistic>
+            </nz-card>
+        </div>
+        <div nz-col [nzSpan]="6">
+            <nz-card nzSize="small">
+                <nz-statistic [nzValue]="totalCommissions()" nzTitle="Agent Commissions Paid"
+                    [nzValueStyle]="{ color: '#faad14' }" [nzPrefix]="'$'"></nz-statistic>
+            </nz-card>
+        </div>
+        <div nz-col [nzSpan]="6">
+            <nz-card nzSize="small">
+                <nz-statistic [nzValue]="analytics()?.totalPolicies ?? 0" nzTitle="Total Policies"></nz-statistic>
+            </nz-card>
+        </div>
+        <div nz-col [nzSpan]="6">
+            <nz-card nzSize="small">
+                <nz-statistic [nzValue]="topAgent()?.agentName ?? 'None'" nzTitle="Star Performer"
+                    [nzPrefix]="starTemplate"></nz-statistic>
+                <ng-template #starTemplate><span nz-icon nzType="trophy" nzTheme="outline"
+                        style="color: gold;"></span></ng-template>
+            </nz-card>
+        </div>
+    </div>
+
+    <div nz-row [nzGutter]="24">
+        <!-- AGENT LEADERBOARD -->
+        <div nz-col [nzMd]="14">
+            <nz-card nzTitle="Agent Performance Leaderboard" class="form-card">
+                <nz-table #perfTable [nzData]="agentPerformance()?.agents ?? []" nzSize="small"
+                    [nzShowPagination]="false">
+                    <thead>
+                        <tr>
+                            <th>Agent</th>
+                            <th>Sales</th>
+                            <th>Revenue</th>
+                            <th>Commission</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (a of perfTable.data; track a.agentId) {
+                        <tr>
+                            <td><b>{{ a.agentName }}</b></td>
+                            <td><nz-badge [nzCount]="a.policiesSold"
+                                    [nzStyle]="{ backgroundColor: '#52c41a' }"></nz-badge></td>
+                            <td>{{ a.totalRevenueGenerated | currency }}</td>
+                            <td><span style="color: #faad14;">{{ a.totalCommission | currency }}</span></td>
+                        </tr>
+                        }
+                    </tbody>
+                </nz-table>
+            </nz-card>
+        </div>
+
+        <!-- REVENUE BY MONTH -->
+        <div nz-col [nzMd]="10">
+            <nz-card nzTitle="Revenue Trajectory">
+                <nz-table #revTable [nzData]="revenueReport()?.monthlyBreakdown ?? []" nzSize="small"
+                    [nzShowPagination]="false">
+                    <thead>
+                        <tr>
+                            <th>Month</th>
+                            <th>Revenue</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (m of revTable.data; track m.month) {
+                        <tr>
+                            <td><code>{{ m.month }}</code></td>
+                            <td><b>{{ m.revenue | currency }}</b></td>
+                        </tr>
+                        }
+                    </tbody>
+                </nz-table>
+            </nz-card>
+        </div>
+    </div>
+</div>

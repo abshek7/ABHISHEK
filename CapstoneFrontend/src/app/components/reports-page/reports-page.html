@@ -1,0 +1,72 @@
+<div class="page-container">
+  <div class="page-header">
+    <h2>Reports</h2>
+  </div>
+  <div nz-row nzGutter="16">
+    <div nz-col nzSpan="8">
+      <nz-card nzTitle="Users">
+        <p>Total: {{ analytics()?.totalUsers ?? 0 }}</p>
+        <p>Agents: {{ analytics()?.totalAgents ?? 0 }}, Customers: {{ analytics()?.totalCustomers ?? 0 }}</p>
+      </nz-card>
+    </div>
+    <div nz-col nzSpan="8">
+      <nz-card nzTitle="Policies">
+        <p>Total: {{ analytics()?.totalPolicies ?? 0 }}</p>
+        <p>Active: {{ analytics()?.activePolicies ?? 0 }}</p>
+      </nz-card>
+    </div>
+    <div nz-col nzSpan="8">
+      <nz-card nzTitle="Claims">
+        <p>Total: {{ analytics()?.totalClaims ?? 0 }}</p>
+        <p>Pending: {{ analytics()?.pendingClaims ?? 0 }}</p>
+      </nz-card>
+    </div>
+    <div nz-col nzSpan="8">
+      <nz-card nzTitle="Requests">
+        <p>Total: {{ analytics()?.totalPolicyRequests ?? 0 }}</p>
+        <p>Unassigned: {{ analytics()?.unassignedRequests ?? 0 }}</p>
+      </nz-card>
+    </div>
+  </div>
+  <div class="tables-row">
+    <h3>Agent performance</h3>
+    <nz-table [nzData]="agents()">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Open requests</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (a of agents(); track a.id) {
+          <tr>
+            <td>{{ a.name }}</td>
+            <td>{{ a.email }}</td>
+            <td>{{ a.openRequestCount }}</td>
+          </tr>
+        }
+      </tbody>
+    </nz-table>
+    <h3>Claims officer workload</h3>
+    <nz-table [nzData]="officers()">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Assigned claims</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (o of officers(); track o.id) {
+          <tr>
+            <td>{{ o.name }}</td>
+            <td>{{ o.email }}</td>
+            <td>{{ o.assignedClaimCount }}</td>
+          </tr>
+        }
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+

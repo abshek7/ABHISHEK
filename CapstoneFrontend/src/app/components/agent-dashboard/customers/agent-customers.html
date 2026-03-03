@@ -1,0 +1,30 @@
+<div class="tab-content-inner fade-in">
+  <nz-card nzTitle="My Assigned Customers">
+    <nz-table #custTable [nzData]="customers()" nzSize="small">
+      <thead>
+        <tr>
+          <th>Customer Name</th>
+          <th>User ID</th>
+          <th>Risk Category</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (c of custTable.data; track c.customerId) {
+        <tr>
+          <td><b>{{ c.name }}</b></td>
+          <td><code>{{ c.customerId }}</code></td>
+          <td>
+            @if (c.riskScore && c.riskScore > 50) {
+            <nz-badge nzStatus="error" nzText="High Risk"></nz-badge>
+            } @else if (c.riskScore && c.riskScore > 20) {
+            <nz-badge nzStatus="warning" nzText="Moderate"></nz-badge>
+            } @else {
+            <nz-badge nzStatus="success" nzText="Standard"></nz-badge>
+            }
+          </td>
+        </tr>
+        }
+      </tbody>
+    </nz-table>
+  </nz-card>
+</div>
