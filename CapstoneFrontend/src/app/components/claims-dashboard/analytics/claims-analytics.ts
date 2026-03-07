@@ -6,8 +6,7 @@ import { NzStatisticModule } from 'ng-zorro-antd/statistic';
 import { Claim } from '../../../services/claim/claim';
 
 @Component({
-    selector: 'app-claims-analytics',
-    standalone: true,
+    selector: 'app-claims-analytics', 
     imports: [
         CommonModule,
         NzGridModule,

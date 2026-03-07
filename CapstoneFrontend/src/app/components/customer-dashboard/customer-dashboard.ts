@@ -1,4 +1,4 @@
-import { Component, OnInit, computed, signal, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { Router, RouterOutlet, RouterLink } from '@angular/router';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzCardModule } from 'ng-zorro-antd/card';
@@ -25,8 +25,7 @@ import { PolicyTypes } from '../../services/policy-types/policy-types';
 import { PolicyRequest } from '../../services/policy-request/policy-request';
 
 @Component({
-  selector: 'app-customer-dashboard',
-  standalone: true,
+  selector: 'app-customer-dashboard', 
   imports: [
     RouterOutlet,
     RouterLink,
@@ -50,7 +49,7 @@ import { PolicyRequest } from '../../services/policy-request/policy-request';
   templateUrl: './customer-dashboard.html',
   styleUrl: './customer-dashboard.css',
 })
-export class CustomerDashboard implements OnInit {
+export class CustomerDashboard  {
   private router = inject(Router);
   private policy = inject(Policy);
   private claim = inject(Claim);

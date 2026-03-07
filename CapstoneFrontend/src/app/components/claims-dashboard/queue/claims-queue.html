@@ -25,8 +25,10 @@
                             <td><nz-badge [nzStatus]="c.status === 'Submitted' ? 'processing' : 'default'"
                                     [nzText]="c.status"></nz-badge></td>
                             <td>
+                                @if (c.status !== 'Settled') {
                                 <button nz-button nzType="primary" nzSize="small"
                                     (click)="selectClaim(c.id)">Assess</button>
+                                }
                             </td>
                         </tr>
                         }

@@ -119,7 +119,7 @@ namespace CapStone.Infrastructure.Data
                 new PolicyType { Id = pt3Id, Name = "Premium Accident", BasePremium = 2000, BaseCoverageAmount = 200000, DurationMonths = 24, Status = "Active", CreatedBy = adminId },
                 new PolicyType { Id = pt4Id, Name = "Family Accident", BasePremium = 3000, BaseCoverageAmount = 300000, DurationMonths = 24, Status = "Active", CreatedBy = adminId }
             };
-
+ 
             context.PolicyTypes.AddRange(policyTypes);
 
             var coverages = new List<PolicyCoverage>

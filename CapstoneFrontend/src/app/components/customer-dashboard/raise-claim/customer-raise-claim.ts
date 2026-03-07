@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed,  inject,signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -24,8 +24,7 @@ import { Nominee as NomineeModel } from '../../../models/policy';
 import { FileService } from '../../../services/file/file';
 
 @Component({
-  selector: 'app-customer-raise-claim',
-  standalone: true,
+  selector: 'app-customer-raise-claim', 
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -80,9 +79,7 @@ import { FileService } from '../../../services/file/file';
 
   constructor() {
     this.policy.loadCustomerPolicies();
-  }
-
-  // ✅ FIXED — used by button
+  } 
   canSubmit(): boolean {
     return this.form.valid && !this.loading() && this.fileList.length > 0;
   }

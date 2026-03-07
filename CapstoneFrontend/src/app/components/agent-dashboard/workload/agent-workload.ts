@@ -18,8 +18,7 @@ import { Agent } from '../../../services/agent/agent';
 import { PolicyRequestResponse } from '../../../models/requests';
 
 @Component({
-    selector: 'app-agent-workload',
-    standalone: true,
+    selector: 'app-agent-workload', 
     imports: [
         CommonModule,
         ReactiveFormsModule,

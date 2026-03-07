@@ -13,8 +13,7 @@ import { Auth } from '../../services/auth/auth';
 import { Claim } from '../../services/claim/claim';
 
 @Component({
-  selector: 'app-claims-dashboard',
-  standalone: true,
+  selector: 'app-claims-dashboard', 
   imports: [
     CommonModule,
     NzMenuModule,

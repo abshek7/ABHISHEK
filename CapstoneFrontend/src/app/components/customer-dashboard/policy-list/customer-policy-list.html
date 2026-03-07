@@ -136,7 +136,6 @@
       <div class="invoice-header" style="display: flex; justify-content: space-between; margin-bottom: 24px;">
         <div>
           <h2 style="margin: 0;">INVOICE</h2>
-          <p class="text-muted">#{{ currentInvoice()!.policyNumber }}</p>
         </div>
         <div style="text-align: right;">
           <p><b>Date:</b> {{ currentInvoice()!.issuedDate | date }}</p>
@@ -147,12 +146,36 @@
       <nz-descriptions nzBordered [nzColumn]="1" nzSize="small">
         <nz-descriptions-item nzTitle="Customer">{{ currentInvoice()!.customerName }}</nz-descriptions-item>
         <nz-descriptions-item nzTitle="Policy Number">{{ currentInvoice()!.policyNumber }}</nz-descriptions-item>
+        @if (selectedPolicy()) {
+        <nz-descriptions-item nzTitle="Plan Type"><b>{{ selectedPolicy()!.policyTypeName }}</b></nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Coverage Amount">{{ selectedPolicy()!.coverageAmount | currency
+          }}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Policy Period">{{ selectedPolicy()!.startDate | date: 'shortDate' }} - {{
+          selectedPolicy()!.endDate | date: 'shortDate' }}</nz-descriptions-item>
+        }
       </nz-descriptions>
 
+      @if (policyNominees().length > 0) {
+      <div style="margin-top: 16px;">
+        <h4 style="margin-bottom: 8px;">Nominee Details</h4>
+        <nz-descriptions nzBordered [nzColumn]="1" nzSize="small">
+          @for (nom of policyNominees(); track nom.id) {
+          <nz-descriptions-item nzTitle="Name">{{ nom.name }}</nz-descriptions-item>
+          <nz-descriptions-item nzTitle="Relationship">{{ nom.relationship }}</nz-descriptions-item>
+          <nz-descriptions-item nzTitle="Phone">{{ nom.phone }}</nz-descriptions-item>
+          <nz-descriptions-item nzTitle="DOB">{{ nom.dateOfBirth | date: 'shortDate' }}</nz-descriptions-item>
+          }
+        </nz-descriptions>
+      </div>
+      }
+
       <div class="invoice-amount" style="margin-top: 24px; text-align: right;">
-        <p style="font-size: 1.1rem;">Total Amount Due:</p>
-        <h1 style="color: #1890ff; font-weight: 700;">{{ currentInvoice()!.totalAmount | currency }}</h1>
-        <p class="text-muted">Amount Paid: {{ currentInvoice()!.amountPaid | currency }}</p>
+        <p style="font-size: 1.1rem; margin-bottom: 0;">Total Amount: {{ currentInvoice()!.totalAmount | currency }}</p>
+        <p class="text-muted" style="margin-bottom: 16px;">Amount Paid: {{ currentInvoice()!.amountPaid | currency }}
+        </p>
+        <p style="font-size: 1.1rem; margin-bottom: 0;">Amount Due:</p>
+        <h1 style="color: #1890ff; font-weight: 700; margin-top: 0;">{{ (currentInvoice()!.totalAmount -
+          currentInvoice()!.amountPaid) | currency }}</h1>
       </div>
     </div>
     }

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, computed, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzTagModule } from 'ng-zorro-antd/tag';
@@ -18,12 +18,12 @@ import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { FormsModule, ReactiveFormsModule, Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Policy } from '../../../services/policy/policy';
 import { PolicyRequest } from '../../../services/policy-request/policy-request';
+import { Nominee as NomineeService } from '../../../services/nominee/nominee';
 import { Router } from '@angular/router';
-import { Invoice } from '../../../models/policy';
+import { Invoice, Nominee } from '../../../models/policy';
 
 @Component({
   selector: 'app-customer-policy-list',
-  standalone: true,
   imports: [
     CommonModule,
     NzTableModule,
@@ -46,10 +46,11 @@ import { Invoice } from '../../../models/policy';
   templateUrl: './customer-policy-list.html',
   styleUrl: './customer-policy-list.css',
 })
-export class CustomerPolicyList implements OnInit, OnDestroy {
+export class CustomerPolicyList {
   filterText = signal('');
   private policy = inject(Policy);
   private policyRequest = inject(PolicyRequest);
+  private nomineeService = inject(NomineeService);
   private message = inject(NzMessageService);
   private fb = inject(FormBuilder);
   private router = inject(Router);
@@ -60,9 +61,11 @@ export class CustomerPolicyList implements OnInit, OnDestroy {
 
   selectedPolicyId = signal<string | null>(null);
   selectedRequestId = signal<string | null>(null);
+  selectedPolicy = signal<any | null>(null);
 
   renewalDuration = signal(12);
   currentInvoice = signal<Invoice | null>(null);
+  policyNominees = signal<Nominee[]>([]);
   loading = signal(false);
   submitting = signal(false);
 
@@ -132,6 +135,17 @@ export class CustomerPolicyList implements OnInit, OnDestroy {
 
   viewInvoice(policyId: string) {
     this.loading.set(true);
+    const policy = this.policies().find(p => p.id === policyId);
+    if (policy) {
+      this.selectedPolicy.set(policy);
+    }
+
+    // Fetch nominees on opening invoice
+    this.nomineeService.getByPolicy(policyId).subscribe({
+      next: (n) => this.policyNominees.set(n),
+      error: () => this.policyNominees.set([])
+    });
+
     this.policy.getInvoice(policyId).subscribe({
       next: (invoice) => {
         this.currentInvoice.set(invoice);

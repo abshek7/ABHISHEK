@@ -15,8 +15,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { Admin } from '../../../services/admin/admin';
 
 @Component({
-    selector: 'app-admin-user-management',
-    standalone: true,
+    selector: 'app-admin-user-management', 
     imports: [
         CommonModule,
         ReactiveFormsModule,

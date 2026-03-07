@@ -39,7 +39,7 @@ namespace CapStone.Infrastructure.Services
             var token = new JwtSecurityToken(
                 issuer: _config["Jwt:Issuer"],
                 audience: _config["Jwt:Audience"],
-                expires: DateTime.Now.AddSeconds(24 * 3600),
+                expires: DateTime.Now.AddSeconds(24 * 60 * 60),
                 claims: claims,
                 signingCredentials: creds);
 

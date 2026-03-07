@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, signal, computed } from '@angular/core';
+import { Component,  inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { NzGridModule } from 'ng-zorro-antd/grid';
@@ -17,8 +17,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { Claim } from '../../../services/claim/claim';
 
 @Component({
-    selector: 'app-claims-queue',
-    standalone: true,
+    selector: 'app-claims-queue', 
     imports: [
         CommonModule,
         ReactiveFormsModule,
@@ -37,7 +36,7 @@ import { Claim } from '../../../services/claim/claim';
     ],
     templateUrl: './claims-queue.html'
 })
-export class ClaimsQueue implements OnInit {
+export class ClaimsQueue {
     private claimService = inject(Claim);
     private fb = inject(FormBuilder);
     private message = inject(NzMessageService);

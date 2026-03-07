@@ -28,7 +28,7 @@ import { InsuranceTour } from './insurance-tour/insurance-tour';
   providers: [
     {
       provide: 'LUCIDE_ICONS',
-      useValue: { UserPlus, FileSearch, Clock, ClipboardCheck, AlertTriangle, ShieldCheck, Heart, Activity }
+      useValue: {  FileSearch, Clock, ClipboardCheck, AlertTriangle, ShieldCheck, Heart, Activity }
     }
   ],
   templateUrl: './public-page.html',

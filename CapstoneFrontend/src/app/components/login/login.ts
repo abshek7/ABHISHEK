@@ -11,8 +11,7 @@ import { Auth } from '../../services/auth/auth';
 import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-login',
-  standalone: true,
+  selector: 'app-login', 
   imports: [ReactiveFormsModule, NzFormModule, NzInputModule, NzButtonModule, NzAlertModule, NzCardModule, NzGridModule, RouterLink],
   templateUrl: './login.html',
   styleUrl: './login.css',
@@ -57,8 +56,8 @@ export class Login {
           this.router.navigate(['/welcome']);
         }
       },
-      error: _ => {
-        this.error.set('Invalid credentials or server error');
+      error: err => {
+        this.error.set(err.error?.error || 'Invalid credentials or server error');
         this.loading.set(false);
       },
       complete: () => {

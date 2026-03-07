@@ -18,7 +18,6 @@ import { PolicyRequest } from '../../../services/policy-request/policy-request';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
 @Component({
   selector: 'app-customer-create-policy',
-  standalone: true,
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -43,10 +42,26 @@ export class CustomerCreatePolicy {
   private policyRequestService = inject(PolicyRequest);
   private message = inject(NzMessageService);
 
+  habitsList = [
+    'None', 'OccasionalAlcohol', 'RegularAlcohol', 'HeavyAlcohol',
+    'Smoking', 'HeavySmoking', 'Vaping',
+    'ExtremeSports', 'BungeeJumping', 'Skydiving',
+    'NightDriving', 'FrequentTraveler', 'SubstanceAbuse',
+    'SedentaryLifestyle', 'ActiveLifestyle'
+  ];
+
+  medicalList = [
+    'Healthy', 'MinorIssues', 'Asthma', 'Diabetes',
+    'Type1Diabetes', 'Type2Diabetes', 'Hypertension', 'HeartDisease',
+    'Epilepsy', 'VisionProblems', 'HearingImpairment', 'ChronicPain',
+    'Obesity', 'CancerRemission', 'ActiveCancer', 'TerminalIllness',
+    'OrganTransplant', 'NeurologicalDisorder'
+  ];
+
   form = this.fb.group({
     policyTypeId: ['', [Validators.required]],
-    personalHabits: [''],
-    medicalHistory: [''],
+    personalHabits: [[] as string[]],
+    medicalHistory: [[] as string[]],
   });
 
   loading = signal(false);
@@ -66,11 +81,14 @@ export class CustomerCreatePolicy {
     if (this.form.invalid || this.loading()) return;
     this.loading.set(true);
     const value = this.form.value;
+    const habitsStr = Array.isArray(value.personalHabits) ? value.personalHabits.join(',') : '';
+    const medicalStr = Array.isArray(value.medicalHistory) ? value.medicalHistory.join(',') : '';
+
     this.policyRequestService
       .create({
         policyTypeId: value.policyTypeId ?? '',
-        personalHabits: value.personalHabits ?? '',
-        medicalHistory: value.medicalHistory ?? '',
+        personalHabits: habitsStr,
+        medicalHistory: medicalStr,
       })
       .subscribe({
         next: () => {

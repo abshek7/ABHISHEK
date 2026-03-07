@@ -1,4 +1,4 @@
-import { Component, inject, signal, OnInit } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { NzFormModule } from 'ng-zorro-antd/form';
@@ -14,8 +14,7 @@ import { Nominee } from '../../../services/nominee/nominee';
 import { Policy } from '../../../services/policy/policy';
 
 @Component({
-  selector: 'app-customer-nominee',
-  standalone: true,
+  selector: 'app-customer-nominee', 
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -31,7 +30,7 @@ import { Policy } from '../../../services/policy/policy';
   templateUrl: './customer-nominee.html',
   styleUrl: './customer-nominee.css',
 })
-export class CustomerNominee implements OnInit {
+export class CustomerNominee {
   private fb = inject(FormBuilder);
   private nomineeService = inject(Nominee);
   private policyService = inject(Policy);

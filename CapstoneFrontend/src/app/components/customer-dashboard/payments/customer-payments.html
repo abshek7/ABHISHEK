@@ -70,8 +70,7 @@
               <th>Status</th>
             </tr>
           </thead>
-          <tbody>
-            <!-- Table mapping -->
+          <tbody> 
             @for (p of payments(); track p.id) {
             <tr>
               <td><code>{{ p.policyId.substring(0,8) }}...</code></td>

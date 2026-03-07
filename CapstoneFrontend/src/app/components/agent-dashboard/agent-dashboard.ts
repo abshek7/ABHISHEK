@@ -13,8 +13,7 @@ import { Auth } from '../../services/auth/auth';
 import { Agent } from '../../services/agent/agent';
 
 @Component({
-  selector: 'app-agent-dashboard',
-  standalone: true,
+  selector: 'app-agent-dashboard', 
   imports: [
     CommonModule,
     NzMenuModule,

@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { NzGridModule } from 'ng-zorro-antd/grid';
@@ -19,8 +19,7 @@ import { PolicyTypes } from '../../../services/policy-types/policy-types';
 import { CreatePolicyDirect } from '../../../models/agent';
 
 @Component({
-    selector: 'app-agent-policies',
-    standalone: true,
+    selector: 'app-agent-policies', 
     imports: [
         CommonModule,
         ReactiveFormsModule,
@@ -38,7 +37,7 @@ import { CreatePolicyDirect } from '../../../models/agent';
     ],
     templateUrl: './agent-policies.html'
 })
-export class AgentPolicies implements OnInit {
+export class AgentPolicies  {
     private policyService = inject(Policy);
     private agentService = inject(Agent);
     private policyTypesService = inject(PolicyTypes);

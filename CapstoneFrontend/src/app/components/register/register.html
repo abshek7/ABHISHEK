@@ -12,52 +12,65 @@
 
           <nz-form-item>
             <nz-form-label>Full Name</nz-form-label>
-            <nz-form-control>
+            <nz-form-control nzErrorTip="Please enter a valid name (letters & spaces only, min 2 chars).">
               <input nz-input formControlName="name" placeholder="Enter full name" />
             </nz-form-control>
           </nz-form-item>
 
           <nz-form-item>
             <nz-form-label>Email Address</nz-form-label>
-            <nz-form-control>
+            <nz-form-control nzErrorTip="Please enter a valid email address.">
               <input nz-input type="email" formControlName="email" placeholder="Enter email" />
             </nz-form-control>
           </nz-form-item>
 
           <nz-form-item>
             <nz-form-label>Password</nz-form-label>
-            <nz-form-control>
+            <nz-form-control nzErrorTip="Password must be at least 6 characters long.">
               <input nz-input type="password" formControlName="password" placeholder="Create a password" />
             </nz-form-control>
           </nz-form-item>
 
           <nz-form-item>
             <nz-form-label>Date of Birth</nz-form-label>
-            <nz-form-control>
+            <nz-form-control nzErrorTip="Please select your date of birth.">
               <nz-date-picker formControlName="dateOfBirth" nzFormat="yyyy-MM-dd" style="width: 100%"></nz-date-picker>
             </nz-form-control>
           </nz-form-item>
 
           <nz-form-item>
             <nz-form-label>Phone Number</nz-form-label>
-            <nz-form-control>
+            <nz-form-control nzErrorTip="Please enter a valid 10-digit phone number.">
               <input nz-input formControlName="phone" placeholder="Enter phone" />
             </nz-form-control>
           </nz-form-item>
 
           <nz-form-item>
             <nz-form-label>Address</nz-form-label>
-            <nz-form-control>
+            <nz-form-control nzErrorTip="Please enter a valid address (min 5 characters).">
               <input nz-input formControlName="address" placeholder="Enter address" />
             </nz-form-control>
           </nz-form-item>
 
           <nz-form-item>
             <nz-form-label>Occupation</nz-form-label>
-            <nz-form-control>
-              <input nz-input formControlName="occupation" placeholder="Enter occupation" />
+            <nz-form-control nzErrorTip="Please select an occupation.">
+              <nz-select formControlName="occupation" nzShowSearch nzAllowClear nzPlaceHolder="Select an occupation">
+                @for (occ of occupations; track occ) {
+                <nz-option [nzValue]="occ" [nzLabel]="occ"></nz-option>
+                }
+              </nz-select>
             </nz-form-control>
           </nz-form-item>
+
+          @if (form.get('occupation')?.value === 'Other') {
+          <nz-form-item>
+            <nz-form-label>Specify Occupation</nz-form-label>
+            <nz-form-control nzErrorTip="Please enter a valid occupation (min 2 characters, letters/hyphens only).">
+              <input nz-input formControlName="customOccupation" placeholder="Enter your occupation" />
+            </nz-form-control>
+          </nz-form-item>
+          }
 
           <div class="auth-actions">
             <button nz-button nzType="primary" type="submit" [nzLoading]="loading()"

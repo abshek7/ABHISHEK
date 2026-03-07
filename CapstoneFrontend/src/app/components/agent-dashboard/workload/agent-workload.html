@@ -1,119 +1,180 @@
 <div class="tab-content-inner fade-in">
-    <div nz-row [nzGutter]="24">
-        <!-- REQUESTS LIST -->
-        <div nz-col [nzXs]="24" [nzLg]="14">
-            <nz-card nzTitle="My Assessment Queue" [nzExtra]="countTemplate">
-                <ng-template #countTemplate>
-                    <nz-badge [nzCount]="assignedRequests().length" nzShowZero
-                        [nzStyle]="{ backgroundColor: '#1890ff' }"></nz-badge>
-                </ng-template>
+  <div nz-row [nzGutter]="24">
 
-                <nz-table #reqTable [nzData]="assignedRequests()" nzSize="small">
-                    <thead>
-                        <tr>
-                            <th>Customer</th>
-                            <th>Plan</th>
-                            <th>Risk</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @for (r of reqTable.data; track r.id) {
-                        <tr>
-                            <td>
-                                <a (click)="showCustomerDetails(r)">{{ r.customerName || 'View Profile' }}</a>
-                            </td>
-                            <td>{{ r.policyTypeName }}</td>
-                            <td>
-                                @let score = r.totalRiskScore ?? r.suggestedRiskScore ?? 1;
-                                <nz-tag [nzColor]="score > 1.5 ? 'red' : (score > 1.2 ? 'orange' : 'green')">
-                                    {{ score | number:'1.2-2' }}
-                                </nz-tag>
-                            </td>
-                            <td><nz-badge [nzStatus]="r.status === 'Assigned' ? 'processing' : 'default'"
-                                    [nzText]="r.status"></nz-badge></td>
-                            <td>
-                                <button nz-button nzType="primary" nzSize="small"
-                                    (click)="selectRequest(r)">Process</button>
-                            </td>
-                        </tr>
-                        }
-                    </tbody>
-                </nz-table>
-            </nz-card>
-        </div>
+    <!-- REQUESTS LIST -->
+    <div nz-col [nzXs]="24" [nzLg]="14">
+      <nz-card nzTitle="My Assessment Queue" [nzExtra]="countTemplate">
 
-        <!-- UNDERWRITING PANEL -->
-        <div nz-col [nzXs]="24" [nzLg]="10">
-            @if (selectedRequest) {
-            <nz-card [nzTitle]="'Underwriting: ' + selectedRequest.id.substring(0,8)" class="form-card fade-in">
-                <form nz-form [formGroup]="underwritingForm" nzLayout="vertical">
-                    <nz-form-item>
-                        <nz-form-label>Eligibility</nz-form-label>
-                        <nz-form-control>
-                            <nz-radio-group formControlName="isEligible">
-                                <label nz-radio [nzValue]="true">Approve</label>
-                                <label nz-radio [nzValue]="false">Reject</label>
-                            </nz-radio-group>
-                        </nz-form-control>
-                    </nz-form-item>
+        <ng-template #countTemplate>
+          <nz-badge [nzCount]="assignedRequests().length" nzShowZero [nzStyle]="{ backgroundColor: '#1890ff' }">
+          </nz-badge>
+        </ng-template>
 
-                    <div nz-row [nzGutter]="16" *ngIf="underwritingForm.value.isEligible">
-                        <div nz-col [nzSpan]="12">
-                            <nz-form-item>
-                                <nz-form-label>Premium ($)</nz-form-label>
-                                <nz-form-control>
-                                    <nz-input-number formControlName="overridePremium" [nzMin]="1"
-                                        class="w-100"></nz-input-number>
-                                </nz-form-control>
-                            </nz-form-item>
-                        </div>
-                        <div nz-col [nzSpan]="12">
-                            <nz-form-item>
-                                <nz-form-label>Coverage ($)</nz-form-label>
-                                <nz-form-control>
-                                    <nz-input-number formControlName="overrideCoverage" [nzMin]="100"
-                                        class="w-100"></nz-input-number>
-                                </nz-form-control>
-                            </nz-form-item>
-                        </div>
-                    </div>
+        <nz-table #reqTable [nzData]="assignedRequests()" nzSize="small">
+          <thead>
+            <tr>
+              <th>Customer</th>
+              <th>Plan</th>
+              <th>Risk</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
 
-                    <button nz-button nzType="primary" nzBlock class="mt-16" (click)="submitUnderwriting()">
-                        Finalize Decision
-                    </button>
-                    <button nz-button nzBlock nzType="text" class="mt-8"
-                        (click)="selectedRequest = null">Cancel</button>
-                </form>
-            </nz-card>
-            } @else {
-            <nz-card class="empty-state-card">
-                <div class="empty-state-content">
-                    <i nz-icon nzType="audit" style="font-size: 48px; color: #d9d9d9;"></i>
-                    <p>Select a request from the queue to perform underwriting</p>
-                </div>
-            </nz-card>
+          <tbody>
+            @for (r of reqTable.data; track r.id) {
+            <tr>
+              <td>
+                <a (click)="showCustomerDetails(r)">
+                  {{ r.customerName || 'View Profile' }}
+                </a>
+              </td>
+
+              <td>{{ r.policyTypeName }}</td>
+
+              <td>
+                @let score = r.totalRiskScore ?? r.suggestedRiskScore ?? 1;
+
+                <nz-tag [nzColor]="score > 5.0 ? 'red' : (score > 2.5 ? 'orange' : 'green')">
+                  {{ score | number:'1.2-2' }}
+                </nz-tag>
+              </td>
+
+              <td>
+                <nz-badge [nzStatus]="r.status === 'Assigned' ? 'processing' : 'default'" [nzText]="r.status">
+                </nz-badge>
+              </td>
+
+              <td>
+                <button nz-button nzType="primary" nzSize="small" (click)="selectRequest(r)"
+                  [disabled]="r.status !== 'Assigned'">
+                  {{ r.status === 'Assigned' ? 'Process' : 'Processed' }}
+                </button>
+              </td>
+            </tr>
             }
-        </div>
+          </tbody>
+
+        </nz-table>
+      </nz-card>
     </div>
+
+    <!-- UNDERWRITING PANEL -->
+    <div nz-col [nzXs]="24" [nzLg]="10">
+
+      @if (selectedRequest) {
+
+      <nz-card [nzTitle]="'Underwriting: ' + selectedRequest.id.substring(0,8)" class="form-card fade-in">
+
+        <form nz-form [formGroup]="underwritingForm" nzLayout="vertical">
+
+          <nz-form-item>
+            <nz-form-label>Eligibility</nz-form-label>
+            <nz-form-control>
+              <nz-radio-group formControlName="isEligible">
+                <label nz-radio [nzValue]="true">Approve</label>
+                <label nz-radio [nzValue]="false">Reject</label>
+              </nz-radio-group>
+            </nz-form-control>
+          </nz-form-item>
+ 
+          @if (underwritingForm.value.isEligible) {
+
+          <div nz-row [nzGutter]="16">
+
+            <div nz-col [nzSpan]="12">
+              <nz-form-item>
+                <nz-form-label>Premium ($)</nz-form-label>
+                <nz-form-control>
+                  <nz-input-number formControlName="overridePremium" [nzMin]="1" class="w-100">
+                  </nz-input-number>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col [nzSpan]="12">
+              <nz-form-item>
+                <nz-form-label>Coverage ($)</nz-form-label>
+                <nz-form-control>
+                  <nz-input-number formControlName="overrideCoverage" [nzMin]="100" class="w-100">
+                  </nz-input-number>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+          </div>
+
+          }
+
+          <button nz-button nzType="primary" nzBlock class="mt-16" (click)="submitUnderwriting()">
+            Finalize Decision
+          </button>
+
+          <button nz-button nzBlock nzType="text" class="mt-8" (click)="selectedRequest = null">
+            Cancel
+          </button>
+
+        </form>
+      </nz-card>
+
+      } @else {
+
+      <nz-card class="empty-state-card">
+        <div class="empty-state-content">
+          <i nz-icon nzType="audit" style="font-size:48px;color:#d9d9d9;"></i>
+
+          <p>
+            Select a request from the queue to perform underwriting
+          </p>
+        </div>
+      </nz-card>
+
+      }
+
+    </div>
+  </div>
 </div>
 
+
 <!-- CUSTOMER MODAL -->
+
 <nz-modal [(nzVisible)]="customerModalVisible" nzTitle="Customer Profile" (nzOnCancel)="customerModalVisible.set(false)"
-    [nzFooter]="null">
-    <ng-container *nzModalContent>
-        @if (selectedCustomer) {
-        <nz-descriptions [nzColumn]="1" nzBordered nzSize="small">
-            <nz-descriptions-item nzTitle="Full Name">{{ selectedCustomer.customerName }}</nz-descriptions-item>
-            <nz-descriptions-item nzTitle="Email">{{ selectedCustomer.customerEmail }}</nz-descriptions-item>
-            <nz-descriptions-item nzTitle="Phone">{{ selectedCustomer.customerPhone }}</nz-descriptions-item>
-            <nz-descriptions-item nzTitle="Occupation">{{ selectedCustomer.customerOccupation }}</nz-descriptions-item>
-            <nz-descriptions-item nzTitle="Habits">{{ selectedCustomer.personalHabits || 'None disclosed'
-                }}</nz-descriptions-item>
-            <nz-descriptions-item nzTitle="Medical History">{{ selectedCustomer.medicalHistory || 'No major issues'
-                }}</nz-descriptions-item>
-        </nz-descriptions>
-        }
-    </ng-container>
+  [nzFooter]="null">
+
+  <ng-container *nzModalContent>
+
+    @if (selectedCustomer) {
+
+    <nz-descriptions [nzColumn]="1" nzBordered nzSize="small">
+
+      <nz-descriptions-item nzTitle="Full Name">
+        {{ selectedCustomer.customerName }}
+      </nz-descriptions-item>
+
+      <nz-descriptions-item nzTitle="Email">
+        {{ selectedCustomer.customerEmail }}
+      </nz-descriptions-item>
+
+      <nz-descriptions-item nzTitle="Phone">
+        {{ selectedCustomer.customerPhone }}
+      </nz-descriptions-item>
+
+      <nz-descriptions-item nzTitle="Occupation">
+        {{ selectedCustomer.customerOccupation }}
+      </nz-descriptions-item>
+
+      <nz-descriptions-item nzTitle="Habits">
+        {{ selectedCustomer.personalHabits || 'None disclosed' }}
+      </nz-descriptions-item>
+
+      <nz-descriptions-item nzTitle="Medical History">
+        {{ selectedCustomer.medicalHistory || 'No major issues' }}
+      </nz-descriptions-item>
+
+    </nz-descriptions>
+
+    }
+
+  </ng-container>
+
 </nz-modal>

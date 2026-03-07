@@ -9,8 +9,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { Admin } from '../../../services/admin/admin';
 
 @Component({
-    selector: 'app-admin-oversight',
-    standalone: true,
+    selector: 'app-admin-oversight', 
     imports: [
         CommonModule,
         NzGridModule,

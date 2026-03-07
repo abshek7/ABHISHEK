@@ -1,4 +1,4 @@
-import { Component, OnInit, computed, inject, signal } from '@angular/core';
+import { Component,  inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
@@ -18,8 +18,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { Payment } from '../../../services/payment/payment';
 
 @Component({
-  selector: 'app-customer-payments',
-  standalone: true,
+  selector: 'app-customer-payments', 
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -38,7 +37,7 @@ import { Payment } from '../../../services/payment/payment';
   templateUrl: './customer-payments.html',
   styleUrl: './customer-payments.css',
 })
-export class CustomerPayments implements OnInit {
+export class CustomerPayments  {
   private fb = inject(FormBuilder);
   private paymentService = inject(Payment);
   private message = inject(NzMessageService);

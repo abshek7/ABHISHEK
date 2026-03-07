@@ -1,5 +1,5 @@
-import { Component, OnInit, computed, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, computed, inject } from '@angular/core';
+// import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
@@ -14,9 +14,8 @@ import { Auth } from '../../services/auth/auth';
 
 @Component({
   selector: 'app-admin-dashboard',
-  standalone: true,
   imports: [
-    CommonModule,
+    // CommonModule,
     RouterModule,
     NzGridModule,
     NzMenuModule,
@@ -31,15 +30,11 @@ import { Auth } from '../../services/auth/auth';
   templateUrl: './admin-dashboard.html',
   styleUrls: ['./admin-dashboard.css']
 })
-export class AdminDashboard implements OnInit {
+export class AdminDashboard  {
   private auth = inject(Auth);
 
   userEmail = this.auth.email;
   userInitial = computed(() => this.userEmail()?.charAt(0).toUpperCase() || 'A');
-
-  ngOnInit() {
-    // Shared admin initialization if any
-  }
 
   logout() {
     this.auth.clearAuth();

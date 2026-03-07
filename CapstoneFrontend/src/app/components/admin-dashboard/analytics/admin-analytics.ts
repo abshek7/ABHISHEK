@@ -10,8 +10,7 @@ import { Admin } from '../../../services/admin/admin';
 import { RevenueReport, AgentPerformanceReport } from '../../../models/admin';
 
 @Component({
-    selector: 'app-admin-analytics',
-    standalone: true,
+    selector: 'app-admin-analytics', 
     imports: [
         CommonModule,
         NzGridModule,
