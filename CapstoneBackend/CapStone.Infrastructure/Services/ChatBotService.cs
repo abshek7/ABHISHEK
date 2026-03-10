@@ -73,7 +73,7 @@ Each policy type defines specific percentages and limits for these categories.
 
         public ChatBotService(IConfiguration configuration, IHttpClientFactory httpClientFactory)
         {
-            _apiKey = configuration["Gemini:ApiKey"] ?? throw new ArgumentNullException("Gemini:ApiKey not found");
+            _apiKey = Environment.GetEnvironmentVariable("GEMINI_API_KEY") ?? throw new ArgumentNullException("GEMINI_API_KEY environment variable not found");
             _httpClient = httpClientFactory.CreateClient();
 
             var builder = Kernel.CreateBuilder();

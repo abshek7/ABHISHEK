@@ -18,6 +18,7 @@ namespace CapStone.API
     {
         public static void Main(string[] args)
         {
+            DotNetEnv.Env.Load();
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddDbContext<AccidentDbContext>(opt =>
