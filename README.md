@@ -42,17 +42,11 @@ An Angular + ASP.NET Core application for comprehensive accident insurance manag
 
 
 
-
 ## Demo
 
-[Watch the demo video](https://drive.google.com/file/d/1u-5LcqMFwtJZcrNcitDiUSz0fvuhZa8J/view?usp=sharing)
-<iframe 
-  src="https://drive.google.com/file/d/1u-5LcqMFwtJZcrNcitDiUSz0fvuhZa8J/preview"
-  width="100%"
-  height="480"
-  allow="autoplay">
-</iframe>
+Click the image below to watch the demo video.
 
+[![Watch the demo](https://img.shields.io/badge/Watch-Demo%20Video-blue?style=for-the-badge)](https://drive.google.com/file/d/1u-5LcqMFwtJZcrNcitDiUSz0fvuhZa8J/view)
 
 
 ## Setup Instructions
