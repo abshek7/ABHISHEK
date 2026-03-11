@@ -137,3 +137,7 @@ CLEAN ARCHITECTURE :
 - **Route Guards**: Prevents unauthorized access to role-specific dashboards.
 - **CSRF Protection**: Standard ASP.NET Core security middleware.
 - **Role-Based Authorization**: Fine-grained access control on both Frontend (UI elements) and Backend (API endpoints). -->
+
+## Demo
+
+[Watch the demo video](https://drive.google.com/file/d/1u-5LcqMFwtJZcrNcitDiUSz0fvuhZa8J/view?usp=sharing)
