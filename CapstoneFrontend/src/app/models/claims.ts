@@ -27,6 +27,7 @@ export interface ClaimResponse {
   approvedAmount: number | null;
   status: ClaimStatus;
   officerId: string | null;
+  totalRiskScore?: number;
 }
 
 export interface ClaimDetail {

@@ -1,4 +1,4 @@
-import { Component, OnInit, computed, signal, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
@@ -12,8 +12,7 @@ import { Auth } from './services/auth/auth';
 import { Notifications } from './services/notifications/notifications';
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
+  selector: 'app-root', 
   imports: [
     RouterOutlet,
     RouterLink,
@@ -30,7 +29,7 @@ import { Notifications } from './services/notifications/notifications';
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
-export class App implements OnInit {
+export class App {
   private auth = inject(Auth);
   private notifications = inject(Notifications);
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component,inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { NzGridModule } from 'ng-zorro-antd/grid';
@@ -32,7 +32,7 @@ import { Admin } from '../../../services/admin/admin';
     ],
     templateUrl: './admin-user-management.html'
 })
-export class AdminUserManagement implements OnInit {
+export class AdminUserManagement{
     private admin = inject(Admin);
     private fb = inject(FormBuilder);
     private message = inject(NzMessageService);

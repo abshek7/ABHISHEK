@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, computed, signal } from '@angular/core';
+import { Component, inject, computed, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzCardModule } from 'ng-zorro-antd/card';
@@ -22,7 +22,7 @@ import { RevenueReport, AgentPerformanceReport } from '../../../models/admin';
     ],
     templateUrl: './admin-analytics.html'
 })
-export class AdminAnalytics implements OnInit {
+export class AdminAnalytics  {
     private admin = inject(Admin);
 
     analytics = this.admin.analytics;

@@ -53,12 +53,23 @@
                             <span class="label">Occupation:</span>
                             <span class="value">{{ selected()?.occupation }}</span>
                         </div>
-                        <div class="context-item">
-                            <span class="label">Risk Score:</span>
-                            <nz-tag [nzColor]="(selected()?.totalRiskScore ?? 0) > 1.5 ? 'red' : 'blue'">
-                                {{ selected()?.totalRiskScore | number:'1.1-2' }}
-                            </nz-tag>
-                        </div>
+                     <div class="context-item">
+
+  <span class="label">Risk Score:</span>
+
+  @let score = selected()?.totalRiskScore ?? 0;
+
+  <nz-tag
+    [nzColor]="score > 5.0 ? 'red' : (score > 2.5 ? 'orange' : 'green')">
+
+    {{ score | number:'1.2-2' }}
+
+  </nz-tag>
+
+</div>
+ 
+
+
                     </div>
 
                     <div class="context-item mt-8">

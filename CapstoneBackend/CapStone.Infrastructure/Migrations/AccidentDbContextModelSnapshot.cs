@@ -423,9 +423,15 @@ namespace CapStone.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("PasswordResetToken")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Phone")
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
+
+                    b.Property<DateTime?>("ResetTokenExpires")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("Role")
                         .HasColumnType("int");
@@ -517,7 +523,7 @@ namespace CapStone.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("CapStone.Domain.Entities.PolicyRequest", null)
+                    b.HasOne("CapStone.Domain.Entities.PolicyRequest", "PolicyRequest")
                         .WithMany()
                         .HasForeignKey("RequestId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -526,6 +532,8 @@ namespace CapStone.Infrastructure.Migrations
                     b.Navigation("AssignedAgent");
 
                     b.Navigation("Customer");
+
+                    b.Navigation("PolicyRequest");
 
                     b.Navigation("PolicyType");
                 });

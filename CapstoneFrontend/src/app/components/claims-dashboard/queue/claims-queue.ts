@@ -14,6 +14,7 @@ import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzAlertType } from 'ng-zorro-antd/alert';
 import { Claim } from '../../../services/claim/claim';
 
 @Component({

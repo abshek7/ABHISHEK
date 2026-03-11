@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, computed, signal } from '@angular/core';
+import { Component, inject, computed, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzCardModule } from 'ng-zorro-antd/card';
@@ -20,7 +20,7 @@ import { Admin } from '../../../services/admin/admin';
     ],
     templateUrl: './admin-oversight.html'
 })
-export class AdminOversight implements OnInit {
+export class AdminOversight   {
     private admin = inject(Admin);
     private message = inject(NzMessageService);
 

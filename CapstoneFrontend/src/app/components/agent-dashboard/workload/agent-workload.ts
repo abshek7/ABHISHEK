@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, signal, computed } from '@angular/core';
+import { Component, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { NzGridModule } from 'ng-zorro-antd/grid';
@@ -37,7 +37,7 @@ import { PolicyRequestResponse } from '../../../models/requests';
     ],
     templateUrl: './agent-workload.html'
 })
-export class AgentWorkload implements OnInit {
+export class AgentWorkload  {
     private agentService = inject(Agent);
     private fb = inject(FormBuilder);
     private message = inject(NzMessageService);

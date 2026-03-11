@@ -1,4 +1,8 @@
-import { ApplicationConfig, importProvidersFrom, provideBrowserGlobalErrorListeners } from '@angular/core';
+import {
+  ApplicationConfig,
+  importProvidersFrom,
+  provideBrowserGlobalErrorListeners,
+} from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { routes } from './app.routes';
@@ -19,7 +23,7 @@ import {
   TeamOutline,
   PieChartOutline,
   LockOutline,
-  SafetyCertificateOutline
+  SafetyCertificateOutline,
 } from '@ant-design/icons-angular/icons';
 
 const icons = [
@@ -31,9 +35,8 @@ const icons = [
   TeamOutline,
   PieChartOutline,
   LockOutline,
-  SafetyCertificateOutline
+  SafetyCertificateOutline,
 ];
-
 
 registerLocaleData(en);
 
@@ -46,12 +49,11 @@ export const appConfig: ApplicationConfig = {
     provideNzIcons(icons),
     importProvidersFrom(NzTabsModule),
     provideTranslateService({
-      defaultLanguage: 'en'
+      defaultLanguage: 'en',
     }),
     provideTranslateHttpLoader({
       prefix: '/assets/i18n',
-      suffix: '.json'
-    })
-  ]
+      suffix: '.json',
+    }),
+  ],
 };
-
